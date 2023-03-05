@@ -12,13 +12,7 @@
               </h6>
             </div>
             <div class="btn-wrapper text-center">
-              <button
-                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                type="button"
-              >
-                <img alt="..." class="w-5 mr-1" :src="github" />
-                Github
-              </button>
+              
               <button
                 class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                 type="button"
@@ -33,7 +27,7 @@
             <div class="text-blueGray-400 text-center mb-3 font-bold">
               <small>Or sign in with credentials</small>
             </div>
-            <form>
+            <form class="input-feild" @submit.prevent="handleSubmit">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -45,6 +39,7 @@
                   type="email"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
+                  v-model="email"
                 />
               </div>
 
@@ -59,6 +54,7 @@
                   type="password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
+                  v-model="password"
                 />
               </div>
               <div>
@@ -78,6 +74,7 @@
                 <button
                   class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
+                  v-on:click="handleSubmit"
                 >
                   Sign In
                 </button>
@@ -87,9 +84,9 @@
         </div>
         <div class="flex flex-wrap mt-6 relative">
           <div class="w-1/2">
-            <a href="javascript:void(0)" class="text-blueGray-200">
+            <button  v-on:click="forgetpass" class="text-blueGray-200">
               <small>Forgot password?</small>
-            </a>
+            </button>
           </div>
           <div class="w-1/2 text-right">
             <router-link to="/auth/register" class="text-blueGray-200">
@@ -102,15 +99,43 @@
   </div>
 </template>
 <script>
-import github from "@/assets/img/github.svg";
+
 import google from "@/assets/img/google.svg";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      github,
       google,
+      email:"",
+      password:"",
     };
   },
+  methods: {
+   async handleSubmit() {
+      this.submitting = true;
+      let result = await axios
+        .put("http://localhost:9090/user/", {
+          email: this.email,
+          password: this.password,
+          
+        })
+        console.warn(result);
+        if(result.status == 200)
+        {
+          if(result.data.role == "user" || result.data.role == "Admin" )
+          {
+            localStorage.setItem('user', JSON.stringify(result.data));
+          this.$router.push('/profile')
+          }
+          
+         
+        }
+    },
+    forgetpass(){
+
+      this.$router.push('/auth/ResetPassword')
+    }
+}
 };
 </script>

@@ -13,7 +13,7 @@
           <img
             alt="..."
             class="w-full rounded-full align-middle border-none shadow-lg"
-            :src="image"
+            :src="`http://localhost:9090/img/${this.user.Image}` "
           />
         </span>
       </div>
@@ -45,12 +45,11 @@
         Something else here
       </a>
       <div class="h-0 my-2 border border-solid border-blueGray-100" />
-      <a
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Seprated link
-      </a>
+      <button class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                  type="button"
+                  v-on:click="logout">
+        log out
+    </button>
     </div>
   </div>
 </template>
@@ -58,14 +57,20 @@
 <script>
 import { createPopper } from "@popperjs/core";
 
-import image from "@/assets/img/team-1-800x800.jpg";
+
 
 export default {
   data() {
     return {
       dropdownPopoverShow: false,
-      image: image,
+      user:null ,
     };
+  },created() {
+    // Retrieve the user's data from local storage
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData);
+    }
   },
   methods: {
     toggleDropdown: function (event) {
@@ -79,6 +84,14 @@ export default {
         });
       }
     },
+    logout() {
+      // Remove the "user" item from localStorage
+localStorage.removeItem('user');
+
+// Clear the user data in the Vue.js component
+this.user = null;
+this.$router.push('/auth/login')
+    }
   },
 };
 </script>

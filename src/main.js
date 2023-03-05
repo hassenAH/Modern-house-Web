@@ -26,11 +26,14 @@ import Maps from "@/views/admin/Maps.vue";
 
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
-
+import ResetPassword from "@/views/auth/ResetPassword.vue";
+import ForgetPassword from "@/views/auth/ForgetPassword.vue"
+import OTP from "@/views/auth/OTP.vue"
 // views without layouts
 
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
+
 import Index from "@/views/Index.vue";
 
 // routes
@@ -71,6 +74,18 @@ const routes = [
       {
         path: "/auth/register",
         component: Register,
+      },
+      {
+        path: "/auth/ResetPassword",
+        component: ResetPassword,
+      },
+      {
+        path: "/auth/ForgetPassword",
+        component: ForgetPassword,
+      },
+      {
+        path: "/auth/OTP",
+        component: OTP,
       },
     ],
   },
