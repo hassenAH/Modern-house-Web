@@ -156,6 +156,17 @@
                 </button>
               </div>
             </form>
+            
+          </div>
+        </div>
+        <div class="flex flex-wrap mt-6 relative">
+          <div class="w-1/2">
+            <router-link to="/auth/login" class="text-blueGray-200">
+              <small>Already have an account ? Sign In</small>
+            </router-link>
+          </div>
+          <div class="w-1/2 text-right">
+            
           </div>
         </div>
       </div>

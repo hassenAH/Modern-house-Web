@@ -123,10 +123,16 @@ export default {
         console.warn(result);
         if(result.status == 200)
         {
+          localStorage.setItem('user', JSON.stringify(result.data));
+
           if(result.data.role == "user" || result.data.role == "Admin" )
           {
-            localStorage.setItem('user', JSON.stringify(result.data));
+            
           this.$router.push('/profile')
+          }
+          else
+          {
+            this.$router.push('/admin') 
           }
           
          
