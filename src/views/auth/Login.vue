@@ -132,7 +132,12 @@ export default {
           }
           else
           {
-            this.$router.push('/admin') 
+            if(result.data.verified)
+            {
+              this.$router.push('/admin') 
+
+            }
+            
           }
           
          
