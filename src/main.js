@@ -14,7 +14,7 @@ import App from "@/App.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
-
+import Supplier from "@/layouts/Supplier.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
@@ -58,6 +58,29 @@ const routes = [
       },
       {
         path: "/admin/maps",
+        component: Maps,
+      },
+    ],
+  },
+  {
+    path: "/Supplier",
+    redirect: "/Supplier/dashboard",
+    component: Supplier,
+    children: [
+      {
+        path: "/Supplier/dashboard",
+        component: Dashboard,
+      },
+      {
+        path: "/Supplier/settings",
+        component: Settings,
+      },
+      {
+        path: "/Supplier/tables",
+        component: Tables,
+      },
+      {
+        path: "/Supplier/maps",
         component: Maps,
       },
     ],
