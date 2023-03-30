@@ -16,6 +16,7 @@
               <button
                 class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                 type="button"
+                @click="signIn"
               >
                 <img alt="..." class="w-5 mr-1" :src="google" />
                 Google
@@ -98,7 +99,9 @@
     </div>
   </div>
 </template>
+
 <script>
+
 
 import google from "@/assets/img/google.svg";
 import axios from "axios";
@@ -120,7 +123,7 @@ export default {
           password: this.password,
           
         })
-        console.warn(result);
+        console.warn(result.headers);
         if(result.status == 200)
         {
           localStorage.setItem('user', JSON.stringify(result.data));
@@ -146,6 +149,12 @@ export default {
     forgetpass(){
 
       this.$router.push('/auth/ResetPassword')
+    },async signIn(){
+      await this.$gAuth.signIn()
+// googleUser.getId() : Get the user's unique ID string.
+// googleUser.getBasicProfile() : Get the user's basic profile information.
+// googleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
+this.isSignIn = this.$gAuth.isAuthorized
     }
 }
 };

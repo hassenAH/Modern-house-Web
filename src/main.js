@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp  } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 
 // styles
@@ -20,6 +20,7 @@ import Auth from "@/layouts/Auth.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
+import product from "@/views/admin/Product.vue";
 import Maps from "@/views/admin/Maps.vue";
 
 // views for Auth layout
@@ -27,16 +28,23 @@ import Maps from "@/views/admin/Maps.vue";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 import ResetPassword from "@/views/auth/ResetPassword.vue";
-import ForgetPassword from "@/views/auth/ForgetPassword.vue"
+import ForgetPassword from "@/views/auth/ForgetPassword.vue";
 import OTP from "@/views/auth/OTP.vue"
 // views without layouts
 
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
-
+ 
 import Index from "@/views/Index.vue";
 
+
 // routes
+import GAuth from 'vue-google-oauth2'
+const gauthOption = {
+  clientId: '825384301124-cjfejm7c4ukpr06bu6g5mdsvtprgjjeo.apps.googleusercontent.com',
+  scope: 'profile email',
+  prompt: 'select_account'
+}
 
 const routes = [
   {
@@ -55,6 +63,10 @@ const routes = [
       {
         path: "/admin/tables",
         component: Tables,
+      },
+      {
+        path: "/fournisseur/product",
+        component: product,
       },
       {
         path: "/admin/maps",
@@ -108,5 +120,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+import VueImageChooser from 'vue-image-chooser'
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router,VueImageChooser,GAuth, gauthOption).mount("#app");

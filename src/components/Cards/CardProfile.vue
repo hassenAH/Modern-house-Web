@@ -6,16 +6,23 @@
       <div class="flex flex-wrap justify-center">
         <div class="w-full px-4 flex justify-center">
           <div class="relative">
-            <img
+            
+                 <label> <img
+                  v-if="item.imageUrl" :src="item.imageUrl"
                       
-                     :src="`http://localhost:9090/img/${this.user.Image}` "
-                      class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
-                    />
+                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                     />
+                     <input type="file" accept="image/*" @change="uploadImage"  id="file-input"  style="display:none" ></label>  
+            
+                 
+
           </div>
+          
         </div>
         <div class="w-full px-4 text-center mt-20">
           <div class="flex justify-center py-4 lg:pt-4 pt-8">
             <div class="mr-4 p-3 text-center">
+              
               <span
                 class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
               >
@@ -62,20 +69,63 @@
   </div>
 </template>
 <script>
-
+import axios from "axios";
 
 export default {
   data() {
     return {
-      
+      item:{
+          //...
+          image : null,
+          imageUrl: null
+      },
       user:null,
     };
-  },
+  },methods: {
+    onChange(e) {
+      const file = e.target.files[0]
+      this.image = file
+      this.item.imageUrl = URL.createObjectURL(file)
+      this.user.image= this.item.imageUrl
+      
+    },
+
+uploadImage(e) {
+  const file = e.target.files[0]
+      this.image = file
+      this.item.imageUrl = URL.createObjectURL(file)
+      this.user.image= this.item.imageUrl
+      
+  const url = 'http://localhost:9090/user/'+this.user._id; 
+
+  let data = new FormData();
+ 
+  data.append('image', file); 
+
+  let config = {
+    header : {
+      'Content-Type' : 'image/png'
+    }
+  }
+
+  axios.post(
+    url, 
+    data,
+    config
+  ).then(
+    response => {
+      localStorage.setItem('user', JSON.stringify(response.data));
+      console.log('image upload response > ', response)
+    }
+  )
+}
+},
   created() {
     // Retrieve the user's data from local storage
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
+      this.item.imageUrl= 'http://localhost:9090/img/'+this.user.Image;
     }
   }
 };
