@@ -133,6 +133,11 @@ export default {
             
           this.$router.push('/profile')
           }
+          if(result.data.role == "Supplier")
+          {
+            
+          this.$router.push('/Supplier')
+          }
           else
           {
             if(result.data.verified)

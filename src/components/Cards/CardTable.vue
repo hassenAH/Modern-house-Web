@@ -124,9 +124,7 @@
               <table-dropdown />
             </td>
           </tr>
-        
-         
-          
+
         </tbody>
       </table>
     </div>
@@ -141,7 +139,6 @@ import sketch from "@/assets/img/sketch.jpg";
 import react from "@/assets/img/react.jpg";
 import vue from "@/assets/img/react.jpg";
 
-import team1 from "@/assets/img/team-1-800x800.jpg";
 
 import axios from 'axios';
 export default {
@@ -152,7 +149,7 @@ export default {
       sketch,
       react,
       vue,
-      team1,
+   
       Products: [],
       user:null,
 

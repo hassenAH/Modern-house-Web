@@ -14,7 +14,7 @@ import App from "@/App.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
-
+import Supplier from "@/layouts/Supplier.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
@@ -22,6 +22,14 @@ import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import product from "@/views/admin/Product.vue";
 import Maps from "@/views/admin/Maps.vue";
+
+// views for Supplier layout
+
+import SupplierDashboard from "@/views/Supplier/Dashboard.vue";
+import SupplierSettings from "@/views/Supplier/Settings.vue";
+import SupplierTables from "@/views/Supplier/Tables.vue";
+import SupplierMaps from "@/views/Supplier/Maps.vue";
+
 
 // views for Auth layout
 
@@ -71,6 +79,29 @@ const routes = [
       {
         path: "/admin/maps",
         component: Maps,
+      },
+    ],
+  },
+  {
+    path: "/Supplier",
+    redirect: "/Supplier/dashboard",
+    component: Supplier,
+    children: [
+      {
+        path: "/Supplier/dashboard",
+        component: SupplierDashboard,
+      },
+      {
+        path: "/Supplier/settings",
+        component: SupplierSettings,
+      },
+      {
+        path: "/Supplier/tables",
+        component: SupplierTables,
+      },
+      {
+        path: "/Supplier/maps",
+        component: SupplierMaps,
       },
     ],
   },
