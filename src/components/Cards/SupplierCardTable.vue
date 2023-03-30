@@ -17,7 +17,7 @@
       </div>
       <div class="block w-full overflow-x-auto">
         <!-- Projects table -->
-        <table class="items-center w-full bg-transparent border-collapse">
+        <table class="items-center w-full bg-transparent border-collapse" >
           <thead>
             <tr>
               <th
@@ -80,60 +80,37 @@
               ></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-for= "(commande, index) in commandes" :key="index">
             <tr>
               <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
               >
-                <img
-                  :src="bootstrap"
-                  class="h-12 w-12 bg-white rounded-full border"
-                  alt="..."
-                />
                 <span
-                  class="ml-3 font-bold"
+                  class="ml-3 font-bold" 
                   :class="[
                     color === 'light' ? 'text-blueGray-600' : 'text-white',
                   ]"
+
                 >
-                  Argon Design System
+                <li>{{ commande.Date }}</li>
+                
                 </span>
               </th>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                $2,500 USD
+                0
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                <i class="fas fa-circle text-orange-500 mr-2"></i> pending
+                <li>{{ commande.Etat }}</li>
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                <div class="flex">
-                  <img
-                    :src="team1"
-                    alt="..."
-                    class="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow"
-                  />
-                  <img
-                    :src="team2"
-                    alt="..."
-                    class="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-                  />
-                  <img
-                    :src="team3"
-                    alt="..."
-                    class="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-                  />
-                  <img
-                    :src="team4"
-                    alt="..."
-                    class="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-                  />
-                </div>
+               
+                <li>{{ commande.username }}</li>
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -176,7 +153,8 @@
   import team2 from "@/assets/img/team-2-800x800.jpg";
   import team3 from "@/assets/img/team-3-800x800.jpg";
   import team4 from "@/assets/img/team-4-470x470.png";
-  
+  import axios from 'axios';
+
   export default {
     data() {
       return {
@@ -189,8 +167,30 @@
         team2,
         team3,
         team4,
+        commandes: [],
       };
     },
+    methods: {
+  getAllCommandes() {
+    axios.post('http://localhost:9090/commande/getall')
+      .then(response => {
+        this.commandes = response.data.map(p => ({
+          Date: p.date,
+          Etat: p.etat,
+          username : p.user[0].username
+          
+        }));
+        console.log(this.commandes); 
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
+  }
+  
+},
+mounted() {
+  this.getAllCommandes();
+},
     components: {
       TableDropdown,
     },
@@ -204,5 +204,7 @@
       },
     },
   };
+  
   </script>
+
   

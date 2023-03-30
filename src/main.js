@@ -22,6 +22,14 @@ import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
 
+// views for Supplier layout
+
+import SupplierDashboard from "@/views/Supplier/Dashboard.vue";
+import SupplierSettings from "@/views/Supplier/Settings.vue";
+import SupplierTables from "@/views/Supplier/Tables.vue";
+import SupplierMaps from "@/views/Supplier/Maps.vue";
+
+
 // views for Auth layout
 
 import Login from "@/views/auth/Login.vue";
@@ -69,19 +77,19 @@ const routes = [
     children: [
       {
         path: "/Supplier/dashboard",
-        component: Dashboard,
+        component: SupplierDashboard,
       },
       {
         path: "/Supplier/settings",
-        component: Settings,
+        component: SupplierSettings,
       },
       {
         path: "/Supplier/tables",
-        component: Tables,
+        component: SupplierTables,
       },
       {
         path: "/Supplier/maps",
-        component: Maps,
+        component: SupplierMaps,
       },
     ],
   },
