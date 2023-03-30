@@ -72,10 +72,7 @@ const routes = [
         path: "/admin/tables",
         component: Tables,
       },
-      {
-        path: "/fournisseur/product",
-        component: product,
-      },
+     
       {
         path: "/admin/maps",
         component: Maps,
@@ -98,6 +95,9 @@ const routes = [
       {
         path: "/Supplier/tables",
         component: SupplierTables,
+      }, {
+        path: "/Supplier/product",
+        component: product,
       },
       {
         path: "/Supplier/maps",
