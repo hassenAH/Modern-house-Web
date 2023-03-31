@@ -127,27 +127,27 @@ export default {
         if(result.status == 200)
         {
           localStorage.setItem('user', JSON.stringify(result.data));
-
-          if(result.data.role == "user" || result.data.role == "Admin" )
+          if(result.data.verified)
+            {
+          if(result.data.role == "user"  )
           {
             
           this.$router.push('/profile')
-          }
-          if(result.data.role == "Supplier")
+          }else if(result.data.role == "Supplier")
           {
             
           this.$router.push('/Supplier')
           }
-          else
+          else if(result.data.role == "Admin" )
           {
-            if(result.data.verified)
-            {
+            
+           
               this.$router.push('/admin') 
 
-            }
+            
             
           }
-          
+        }
          
         }
     },

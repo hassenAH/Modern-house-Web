@@ -136,7 +136,7 @@
             </li>
             <li class="items-center">
             <router-link
-              to="/fournisseur/product"
+              to="/Supplier/product"
               v-slot="{ href, navigate, isActive }"
             >
               <a
