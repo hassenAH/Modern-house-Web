@@ -49,14 +49,10 @@ import Index from "@/views/Index.vue";
 
 
 // routes
-import GAuth from 'vue-google-oauth2'
-const gauthOption = {
-  clientId: '329288049230-cb67c73dpnu42bfenvk59l868rg3cgh3.apps.googleusercontent.com',
-  scope: 'profile email',
-  prompt: 'consent',
-  fetch_basic_profile:true
-}
+import GAuth from 'vue3-google-oauth2'
 
+
+const gAuthOptions = { clientId: '329288049230-cb67c73dpnu42bfenvk59l868rg3cgh3.apps.googleusercontent.com', scope: 'email', prompt: 'consent' }
 const routes = [
   {
     path: "/admin",
@@ -161,7 +157,7 @@ const router = createRouter({
 const app = createApp(App)
 
 app.use(router)
-app.use(GAuth, gauthOption);
+app.use(GAuth, gAuthOptions);
 // register other plugins here
 
 app.mount('#app')
