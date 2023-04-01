@@ -21,7 +21,7 @@ import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import product from "@/views/admin/Product.vue";
-import Products from "@/views/admin/ProductTable.vue";
+import ProductList from "@/views/admin/ProductTable.vue";
 import Maps from "@/views/admin/Maps.vue";
 
 // views for Supplier layout
@@ -80,7 +80,7 @@ const routes = [
       },
       {
         path: "/admin/products",
-        component: Products,
+        component: ProductList,
       },
     ],
   },
