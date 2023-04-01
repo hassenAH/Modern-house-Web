@@ -109,6 +109,7 @@
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
                 <i class="fas fa-circle text-orange-500 mr-2"></i> pending
+                {{ p._id }}
               </td>
              
               <td
@@ -151,7 +152,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown />
+                <table-dropdown :ProductId="p._id"/>
               </td>
             </tr>
   
@@ -161,24 +162,16 @@
     </div>
   </template>
   <script>
-  import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
+  import TableDropdown from "@/components/Dropdowns/TableDropDownProduct.vue";
   
-  import bootstrap from "@/assets/img/bootstrap.jpg";
-  import angular from "@/assets/img/angular.jpg";
-  import sketch from "@/assets/img/sketch.jpg";
-  import react from "@/assets/img/react.jpg";
-  import vue from "@/assets/img/react.jpg";
+  
   
   
   import axios from 'axios';
   export default {
     data() {
       return {
-        bootstrap,
-        angular,
-        sketch,
-        react,
-        vue,
+        
      
         Products: [],
         user:null,

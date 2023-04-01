@@ -16,25 +16,18 @@
           block: dropdownPopoverShow,
         }"
       >
+        <a
+          href="javascript:void(0);" @click.prevent="Delete(ProductId)"
+          class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        >
+         Delete
+        </a>
         
-        <a
-          href="javascript:void(0);" @click.prevent="DeleteUser(userid)"
-          class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-        Delete
-        </a>
-        <a
-          href="javascript:void(0);" @click.prevent="VerifyUser(userid)"
-          class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >
-          Verif
-        </a>
       </div>
     </div>
   </template>
   <script>
-
-import { createPopper } from "@popperjs/core";
+  import { createPopper } from "@popperjs/core";
   import axios from 'axios';
   export default {
     data() {
@@ -43,30 +36,6 @@ import { createPopper } from "@popperjs/core";
       };
     },
     methods: {
-        VerifyUser(userid)
-        {
-            axios.get('http://localhost:9090/user/verify/'+userid)
-    .then(response => {
-        
-       console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-        }, DeleteUser(userid)
-        {
-          
-            axios.delete('http://localhost:9090/user/'+userid)
-    .then(response => {
-
-       console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-        },
       toggleDropdown: function (event) {
         event.preventDefault();
         if (this.dropdownPopoverShow) {
@@ -78,9 +47,22 @@ import { createPopper } from "@popperjs/core";
           });
         }
       },
+      Delete(ProductId)
+        {
+            console.log(ProductId);
+            axios.delete('http://localhost:9090/produit/deleteid/'+ProductId)
+    .then(response => {
+
+       console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    },
+    
     },
     props: {
-      userid:String,
+        ProductId:String,
     },
   };
   </script>
