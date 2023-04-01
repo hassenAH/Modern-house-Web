@@ -24,6 +24,7 @@
             <i class="fas fa-search"></i>
           </span>
           <input
+          v-model="password"
             type="text"
             placeholder="Search here..."
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
@@ -87,7 +88,7 @@
                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                 ]"
               >
-              Role
+              Company
               </th>
               <th
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -143,19 +144,8 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                <div class="flex items-center">
-                  <span class="mr-2">60%</span>
-                  <div class="relative w-full">
-                    <div
-                      class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
-                    >
-                      <div
-                        style="width: 60%;"
-                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                      ></div>
-                    </div>
-                  </div>
-                </div>
+               
+              {{ user.company_name }}
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
@@ -179,11 +169,14 @@
   export default {
     data() {
       return {
-        
+        search:"",
         users: [],
       };
     },
     methods: {
+     /* searchUser(search){
+
+      },*/
       BanOrUnban(user){
         if(user.Status == "unban")
         {

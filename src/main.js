@@ -1,6 +1,7 @@
 import { createApp  } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 
+
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -50,9 +51,10 @@ import Index from "@/views/Index.vue";
 // routes
 import GAuth from 'vue-google-oauth2'
 const gauthOption = {
-  clientId: '825384301124-cjfejm7c4ukpr06bu6g5mdsvtprgjjeo.apps.googleusercontent.com',
+  clientId: '329288049230-cb67c73dpnu42bfenvk59l868rg3cgh3.apps.googleusercontent.com',
   scope: 'profile email',
-  prompt: 'select_account'
+  prompt: 'consent',
+  fetch_basic_profile:true
 }
 
 const routes = [
@@ -156,6 +158,10 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-import VueImageChooser from 'vue-image-chooser'
+const app = createApp(App)
 
-createApp(App).use(router,VueImageChooser,GAuth, gauthOption).mount("#app");
+app.use(router)
+app.use(GAuth, gauthOption);
+// register other plugins here
+
+app.mount('#app')
