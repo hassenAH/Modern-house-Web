@@ -27,6 +27,7 @@
     "v-file-picker": "^1.1.2",
     "vue": "3.0.7",
     "vue-google-oauth2": "^1.5.10",
+    "vue-google-signin": "^2.0.3",
     "vue-image-chooser": "^0.5.14",
     "vue-router": "4.0.5"
   },
