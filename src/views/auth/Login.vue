@@ -12,15 +12,18 @@
               </h6>
             </div>
             <div class="btn-wrapper text-center">
-              <h1>is init : {{ Vue3GoogleOauth.isInit }}</h1>
+              
+              <a :href="getGoogleUrl(from)" >
               <button
                 class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                 type="button"
-                @click="logingoogle()"
+                
               >
+           
                 <img alt="..." class="w-5 mr-1" :src="google" />
                 Google
               </button>
+            </a>
             </div>
             <hr class="mt-6 border-b-1 border-blueGray-300" />
           </div>
@@ -105,8 +108,7 @@
 
 import google from "@/assets/img/google.svg";
 import axios from "axios";
-import { inject } from "vue";
-
+import { getGoogleUrl } from './utils/getGoogleUrl';
 export default {
   data() {
     return {
@@ -116,20 +118,15 @@ export default {
     };
   },
   setup(){
-    const Vue3GoogleOauth = inject('Vue3GoogleOauth');
+   
+   
     return{
-      Vue3GoogleOauth
+      
+      getGoogleUrl
     }
   },
   methods: {
-    async logingoogle(){
-      const userGoogle = await this.$gAuth.signIn()
-      console.log('goole auth',userGoogle)
-// googleUser.getId() : Get the user's unique ID string.
-// googleUser.getBasicProfile() : Get the user's basic profile information.
-// googleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
-
-    },
+   
    async handleSubmit() {
       this.submitting = true;
       let result = await axios

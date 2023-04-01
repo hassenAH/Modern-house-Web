@@ -52,7 +52,7 @@ import Index from "@/views/Index.vue";
 import GAuth from 'vue3-google-oauth2'
 
 
-const gAuthOptions = { clientId: '329288049230-cb67c73dpnu42bfenvk59l868rg3cgh3.apps.googleusercontent.com', scope: 'email', prompt: 'consent' }
+
 const routes = [
   {
     path: "/admin",
@@ -154,10 +154,14 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+const id = '329288049230-cb67c73dpnu42bfenvk59l868rg3cgh3.apps.googleusercontent.com'
+
 const app = createApp(App)
 
 app.use(router)
-app.use(GAuth, gAuthOptions);
+app.use(GAuth, { clientId:id ,
+  scope: 'email',
+   prompt: 'consent' });
 // register other plugins here
 
 app.mount('#app')
