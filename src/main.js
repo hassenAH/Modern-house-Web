@@ -31,7 +31,9 @@ import SupplierDashboard from "@/views/Supplier/Dashboard.vue";
 import SupplierSettings from "@/views/Supplier/Settings.vue";
 import SupplierTables from "@/views/Supplier/Tables.vue";
 import SupplierMaps from "@/views/Supplier/Maps.vue";
-
+import DetailCommande from "@/views/Supplier/DetailCommande.vue";
+import shipping from "@/views/Supplier/Shipping.vue";
+import archive from "@/views/Supplier/Archive.vue";
 
 // views for Auth layout
 
@@ -105,6 +107,19 @@ const routes = [
       {
         path: "/Supplier/maps",
         component: SupplierMaps,
+      },
+      {
+        path: "/Supplier/detailcommande",
+        name: "detailcommande",
+        component: DetailCommande,
+      },
+      {
+        path: "/Supplier/shipping",
+        component: shipping,
+      },
+      {
+        path: "/Supplier/archive",
+        component: archive,
       },
     ],
   },
