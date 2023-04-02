@@ -100,7 +100,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody v-for= "user in filteredUsers" :key="user._id">
+          <tbody v-for= "user in filteredUsers" :key="user._id" >
             <tr>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
@@ -150,7 +150,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :userid="user._id"/>
+                <table-dropdown :userid="user._id"  @child-event="receiveDataFromChild"/>
               </td>
             </tr>
           </tbody>
@@ -171,12 +171,11 @@
       return {
         search:"",
         users: [],
+        dataFromChild:null
       };
     },
     methods: {
-     /* searchUser(search){
-
-      },*/
+      
       BanOrUnban(user){
         if(user.Status == "unban")
         {
@@ -222,14 +221,28 @@
     .catch(error => {
       console.log(error);
     });
-  }
+  },
+  receiveDataFromChild(data) {
+      this.dataFromChild = data;
+    },
+    updateTable() {
+      this.users.splice(user =>
+        user._id == this.dataFromChild);
+      // Update table logic here
+    },
   
 },
+watch: {
+    dataFromChild() {
+      this.updateTable();
+    },
+  },
 mounted() {
   
   this.getAllUsers();
 
 }, computed: {
+ 
     filteredUsers() {
       const query = this.search.toLowerCase();
       return this.users.filter(user =>

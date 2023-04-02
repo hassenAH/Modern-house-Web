@@ -40,6 +40,7 @@ import { createPopper } from "@popperjs/core";
     data() {
       return {
         dropdownPopoverShow: false,
+        refreshTable:false
       };
     },
     methods: {
@@ -61,6 +62,10 @@ import { createPopper } from "@popperjs/core";
     .then(response => {
 
        console.log(response);
+      
+
+  // emit custom event with refreshTable payload
+  this.$emit('child-event', this.userid);
     })
     .catch(error => {
       console.log(error);

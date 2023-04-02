@@ -99,7 +99,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody v-for= "user in users" :key="user._id">
+          <tbody v-for= "user in users" :key="user._id"  @refresh-table="handleRefreshTable">
             <tr>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
@@ -170,9 +170,15 @@
       return {
         Status:"",
         users: [],
+        refreshTable: false,
       };
     },
-    methods: {BanOrUnban(user){
+    methods: {
+      handleRefreshTable(refreshTable) {
+      // update refreshTable property
+      this.refreshTable = refreshTable;
+    },
+      BanOrUnban(user){
         if(user.Status == "unban")
         {
           axios.get('http://localhost:9090/user/unban/'+user._id)
