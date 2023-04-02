@@ -45,6 +45,13 @@
                   placeholder="Email"
                   v-model="email"
                 />
+                <div style="padding-top: 0px;
+  margin-top: 0px;
+  font-size: 12px; color:red;">
+                  <span v-if="msg.email">{{msg.email}}</span>
+                </div>
+                
+               
               </div>
 
               <div class="relative w-full mb-3">
@@ -60,6 +67,12 @@
                   placeholder="Password"
                   v-model="password"
                 />
+                <div style="padding-top: 0px;
+  margin-top: 0px;
+  font-size: 12px; color:red;">
+                  <span v-if="msg.password">{{msg.password}}</span>
+                </div>
+                
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
@@ -115,7 +128,19 @@ export default {
       google,
       email:"",
       password:"",
+      msg: [],
+      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     };
+  },watch: {
+    email(value){
+      // binding this to the data value in the email input
+      this.email = value;
+      this.validateEmail(value);
+    } 
+    , password(value){
+      this.password = value;
+      this.validatePassword(value);
+    }
   },
   setup(){
    
@@ -126,7 +151,24 @@ export default {
     }
   },
   methods: {
-   
+    validateEmail(value){
+       
+      if (this.regex.test(value))
+  {
+    this.msg['email'] = '';
+  } else{
+    this.msg['email'] = 'Invalid Email Address';
+  } 
+    },
+    validatePassword(value){
+      let difference = 8 - value.length;
+      if (value.length<8) {
+        this.msg['password'] = 'Must be 8 characters! '+ difference + ' characters left' ;
+      } else {
+         this.msg['password'] = '';
+      }
+    }
+  ,
    async handleSubmit() {
       this.submitting = true;
       let result = await axios
