@@ -179,7 +179,7 @@
                   </span>
                 </label>
               </div>
-              <div id="app" v-if="!cap">
+              <div id="hmed" v-if="!cap">
               <div class="np-captcha-container">
                <div class="np-captcha" v-if="captcha && captcha.length">
         <div
@@ -429,7 +429,7 @@ regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 </script>
 <style>
-#app {
+#hmed {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
