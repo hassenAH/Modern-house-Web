@@ -204,8 +204,20 @@
                   v-model="capt"
                 />
     </div>
-    <button @click="createCaptcha" class="np-button">Generate new</button>
-    <button @click="validCaptcha" class="np-button">Valid Captcha </button>
+    <div class="btn-wrapper text-center">
+      <button
+                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
+                type="button"
+                @click="createCaptcha"
+              >
+                <img alt="..." class="w-5 mr-1" :src="refresh" />
+              
+              </button>
+   
+   
+    </div>
+    <button @click="validCaptcha" class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150">Valid Captcha </button>
+    
   </div>
               <div class="text-center mt-6">
                 <button
@@ -236,13 +248,14 @@
   </div>
 </template>
 <script>
-
+import refresh from "@/assets/img/refresh.png";
 import google from "@/assets/img/google.svg";
 import axios from "axios";
 export default {
   data() {
     return {
       google,
+      refresh,
       first_name:"",
       last_name:"",
       email:"",
