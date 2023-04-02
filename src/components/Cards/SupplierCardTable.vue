@@ -104,7 +104,14 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                <li>{{ commande.Etat }}</li>
+              <select v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+        <option value="Order">Order</option>
+        <option value="Picking inventory">Picking inventory</option>
+        <option value="Sorting">Sorting</option>
+        <option value="Packing">Packing</option>
+        <option value="Shipping">Shipping</option>
+        
+      </select>
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -132,7 +139,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown />
+                <table-dropdown :commandeid="commande._id" :etat2="commande.Etat" />
               </td>
             </tr>
           </tbody>
@@ -141,7 +148,7 @@
     </div>
   </template>
   <script>
-  import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
+  import TableDropdown from "@/components/Dropdowns/SupplierDropdown.vue";
   
   import bootstrap from "@/assets/img/bootstrap.jpg";
   import angular from "@/assets/img/angular.jpg";
@@ -168,6 +175,7 @@
         team3,
         team4,
         commandes: [],
+        etat1:""
       };
     },
     methods: {
@@ -185,7 +193,8 @@
       .catch(error => {
         console.log(error);
       }); 
-  }
+  },
+  
   
 },
 mounted() {
@@ -203,6 +212,7 @@ mounted() {
         },
       },
     },
+    
   };
   
   </script>
