@@ -121,7 +121,7 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
             >
-              <table-dropdown :ProductId="p._id"/>
+              <table-dropdown :ProductId="p._id" @child-event="receiveDataFromChild"/>
             </td>
           </tr>
 
@@ -152,11 +152,27 @@ export default {
    
       Products: [],
       user:null,
+      dataFromChild:null
 
     };
   },
+  methods:{
+    receiveDataFromChild(data) {
+      this.dataFromChild = data;
+    },
+    updateTable() {
+      this.Products.splice(pr =>
+      pr._id == this.dataFromChild);
+      // Update table logic here
+    },
+  },
   components: {
     TableDropdown,
+  },
+  watch: {
+    dataFromChild() {
+      this.updateTable();
+    },
   },
   props: {
     color: {
