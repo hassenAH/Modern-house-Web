@@ -152,7 +152,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :ProductId="p._id"/>
+                <table-dropdown :ProductId="p._id" @child-event="receiveDataFromChild"/>
               </td>
             </tr>
   
@@ -175,9 +175,25 @@
      
         Products: [],
         user:null,
+        dataFromChild:null
   
       };
     },
+    methods:{
+      receiveDataFromChild(data) {
+      this.dataFromChild = data;
+    },
+    updateTable() {
+      this.Products.splice(Product =>
+      Product._id == this.dataFromChild);
+      // Update table logic here
+    },
+
+    },watch: {
+    dataFromChild() {
+      this.updateTable();
+    },
+  },
     components: {
       TableDropdown,
     },
@@ -189,7 +205,8 @@
           return ["light", "dark"].indexOf(value) !== -1;
         },
       },
-    },mounted() {
+    }
+    ,mounted() {
       
        axios.get('http://localhost:9090/produit/getall')
       .then(response => {

@@ -149,7 +149,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :userid="user._id"/>
+                <table-dropdown :userid="user._id" @child-event="receiveDataFromChild"/>
               </td>
             </tr>
           </tbody>
@@ -171,6 +171,7 @@
         Status:"",
         users: [],
         refreshTable: false,
+        dataFromChild:null
       };
     },
     methods: {
@@ -231,9 +232,21 @@
     .catch(error => {
       console.log(error);
     });
-  }
+  },
+  receiveDataFromChild(data) {
+      this.dataFromChild = data;
+    },
+    updateTable() {
+      this.users.splice(user =>
+        user._id == this.dataFromChild);
+      // Update table logic here
+    },
   
 },
+watch: {
+    dataFromChild() {
+      this.updateTable();
+    },},
 mounted() {
   this.getAllUsers();
 },

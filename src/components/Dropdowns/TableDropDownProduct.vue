@@ -54,6 +54,7 @@
     .then(response => {
 
        console.log(response);
+       this.$emit('child-event', this.ProductId);
     })
     .catch(error => {
       console.log(error);
