@@ -226,9 +226,11 @@
       this.dataFromChild = data;
     },
     updateTable() {
-      this.users.splice(user =>
+      const index = this.users.findIndex(user =>
         user._id == this.dataFromChild);
-      // Update table logic here
+      if (index !== -1) {
+        this.users.splice(index, 1);
+      }
     },
   
 },

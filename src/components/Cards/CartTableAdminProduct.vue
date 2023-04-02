@@ -184,9 +184,11 @@
       this.dataFromChild = data;
     },
     updateTable() {
-      this.Products.splice(Product =>
-      Product._id == this.dataFromChild);
-      // Update table logic here
+      const index = this.Products.findIndex(Products =>
+      Products._id == this.dataFromChild);
+      if (index !== -1) {
+        this.Products.splice(index, 1);
+      }
     },
 
     },watch: {

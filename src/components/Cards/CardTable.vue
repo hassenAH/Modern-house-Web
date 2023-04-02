@@ -161,8 +161,13 @@ export default {
       this.dataFromChild = data;
     },
     updateTable() {
-      this.Products.splice(pr =>
-      pr._id == this.dataFromChild);
+      const index = this.Products.findIndex(Products =>
+      Products._id == this.dataFromChild);
+      if (index !== -1) {
+        this.Products.splice(index, 1);
+      }
+      
+      
       // Update table logic here
     },
   },

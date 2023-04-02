@@ -175,10 +175,7 @@
       };
     },
     methods: {
-      handleRefreshTable(refreshTable) {
-      // update refreshTable property
-      this.refreshTable = refreshTable;
-    },
+      
       BanOrUnban(user){
         if(user.Status == "unban")
         {
@@ -237,8 +234,12 @@
       this.dataFromChild = data;
     },
     updateTable() {
-      this.users.splice(user =>
+      const index = this.users.findIndex(user =>
         user._id == this.dataFromChild);
+      if (index !== -1) {
+        this.users.splice(index, 1);
+      }
+      
       // Update table logic here
     },
   
