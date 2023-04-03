@@ -22,7 +22,7 @@
         >
           Change Etat
         </a>
-        <router-link  to="/Supplier/detailcommande"
+        <router-link  :to="'/Supplier/detailcommande/' + commandeid"
                 v-slot="{ href ,navigate }"
               >
         <a

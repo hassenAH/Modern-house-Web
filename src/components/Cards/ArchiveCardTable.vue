@@ -13,6 +13,23 @@
               Card Tables
             </h3>
           </div>
+          <form
+        class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
+      >
+        <div class="relative flex w-full flex-wrap items-stretch">
+          <span
+            class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          >
+            <i class="fas fa-search"></i>
+          </span>
+          <input
+          v-model="search"
+            type="text"
+            placeholder="Search here..."
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+          />
+        </div>
+      </form>
         </div>
       </div>
       <div class="block w-full overflow-x-auto">
@@ -80,7 +97,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody v-for= "(commande, index) in commandes" :key="index">
+          <tbody v-for= "commande in filteredCommandes" :key="commande._id">
             <tr>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
@@ -154,7 +171,8 @@
     data() {
       return {
         commandes: [],
-        etat1:""
+        etat1:"",
+        search: '',
       };
     },
     methods: {
@@ -178,6 +196,16 @@
 },
 mounted() {
   this.getArchive();
+},
+computed: {
+ 
+ filteredCommandes() {
+   const query = this.search.toLowerCase();
+   return this.commandes.filter(commande =>
+     commande.username.toLowerCase().includes(query) ||
+     commande.Etat.toLowerCase().includes(query)
+   );
+},
 },
     components: {
       TableDropdown,

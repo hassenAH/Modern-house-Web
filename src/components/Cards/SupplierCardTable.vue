@@ -13,6 +13,23 @@
               Card Tables
             </h3>
           </div>
+          <form
+        class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
+      >
+        <div class="relative flex w-full flex-wrap items-stretch">
+          <span
+            class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          >
+            <i class="fas fa-search"></i>
+          </span>
+          <input
+          v-model="search"
+            type="text"
+            placeholder="Search here..."
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+          />
+        </div>
+      </form>
         </div>
       </div>
       <div class="block w-full overflow-x-auto">
@@ -80,7 +97,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody v-for= "(commande, index) in commandes" :key="index">
+          <tbody v-for= "commande in filteredCommandes" :key="commande._id">
             <tr>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
@@ -99,7 +116,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                0
+              {{ totalAmount }}
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -139,7 +156,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :commandeid="commande._id" :etat2="commande.Etat" />
+                <table-dropdown :commandeid="commande.id" :etat2="commande.Etat" />
               </td>
             </tr>
           </tbody>
@@ -149,33 +166,16 @@
   </template>
   <script>
   import TableDropdown from "@/components/Dropdowns/SupplierDropdown.vue";
-  
-  import bootstrap from "@/assets/img/bootstrap.jpg";
-  import angular from "@/assets/img/angular.jpg";
-  import sketch from "@/assets/img/sketch.jpg";
-  import react from "@/assets/img/react.jpg";
-  import vue from "@/assets/img/react.jpg";
-  
-  import team1 from "@/assets/img/team-1-800x800.jpg";
-  import team2 from "@/assets/img/team-2-800x800.jpg";
-  import team3 from "@/assets/img/team-3-800x800.jpg";
-  import team4 from "@/assets/img/team-4-470x470.png";
+ 
   import axios from 'axios';
 
   export default {
     data() {
       return {
-        bootstrap,
-        angular,
-        sketch,
-        react,
-        vue,
-        team1,
-        team2,
-        team3,
-        team4,
         commandes: [],
-        etat1:""
+        etat1:"",
+        search: '',
+        totalAmount:0,
       };
     },
     methods: {
@@ -183,6 +183,7 @@
     axios.post('http://localhost:9090/commande/getall')
       .then(response => {
         this.commandes = response.data.map(p => ({
+          id:p._id,
           Date: p.date,
           Etat: p.etat,
           username : p.user[0].username
@@ -194,11 +195,32 @@
         console.log(error);
       }); 
   },
-  
+  gettotal(commandeid) {
+    axios.get('http://localhost:9090/commande/total',
+    {
+       _id:commandeid
+    })
+    .then(response => {
+          this.totalAmount = response.data.totalAmount;
+        })
+      .catch(error => {
+        console.log(error);
+      }); 
+  },
   
 },
 mounted() {
   this.getAllCommandes();
+},
+computed: {
+ 
+  filteredCommandes() {
+    const query = this.search.toLowerCase();
+    return this.commandes.filter(commande =>
+      commande.username.toLowerCase().includes(query) ||
+      commande.Etat.toLowerCase().includes(query)
+    );
+ },
 },
     components: {
       TableDropdown,

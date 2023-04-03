@@ -1,19 +1,19 @@
 <template>
     <div class="flex flex-wrap mt-4">
       <div class="w-full mb-12 px-4">
-        <supplier-card-table />
+        <card-detail />
       </div>
       <div class="w-full mb-12 px-4">
-        <supplier-card-table color="dark" />
+        <card-detail color="dark" />
       </div>
     </div>
   </template>
   <script>
-  import SupplierCardTable from "@/components/Cards/SupplierCardTable.vue";
+  import CardDetail from "@/components/Cards/CardDetail.vue";
   
   export default {
     components: {
-      SupplierCardTable,
+        CardDetail,
     },
   };
   </script>

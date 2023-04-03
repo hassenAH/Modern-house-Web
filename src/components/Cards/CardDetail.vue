@@ -10,26 +10,20 @@
               class="font-semibold text-lg"
               :class="[color === 'light' ? 'text-blueGray-700' : 'text-white']"
             >
-              Card Tables
+              Command Details
             </h3>
           </div>
         </div>
       </div>
-      <div class="block w-full overflow-x-auto" >
-        <!-- Projects table -->
-        <div data-v-fb8b6cda="" class="checkout-box">
-<ul data-v-fb8b6cda="" class="checkout-list">
-<span data-v-fb8b6cda=""><li data-v-fb8b6cda="" class="checkout-product">
-<img data-v-fb8b6cda="" src="https://images-americanas.b2w.io/produtos/01/00/item/132381/3/132381386G1.png" alt="" class="product-image"> <h3 data-v-fb8b6cda="" class="product-name">Notebook Lenovo Ideapad 320 Intel® Core i5-7200u 8GB</h3> 
-<span data-v-fb8b6cda="" class="product-price">R$ 2259,00 </span> 
-<button data-v-fb8b6cda="" class="product-remove">X</button>
-</li>
-</span>
-</ul> 
-<!----> <h3 data-v-fb8b6cda="" class="total">
-    Total: R$ 2259, 00
-  </h3
-></div>
+      <div class="block w-full overflow-x-auto">
+        <div >
+            <p>Date: {{ commandes.Date }}</p>
+            <p>Etat: {{ commandes.Etat }}</p>
+            <p>Username: {{ commandes.username }}</p>
+            <p>Email: {{ commandes.email }}</p>
+            <p>Products: {{ commandes.productname }}</p>
+            <p>Quantity: {{ commandes.quantity }}</p>
+        </div>
       </div>
     </div>
   </template>
@@ -41,15 +35,50 @@
     name: 'DetailCommande',
   data() {
     return {
-      commande: null,
+      commandes: [],
     };
   },
-  async mounted() {
-    const id = this.$route.body.id;
-    const response = await axios.post(`http://localhost:9090/commande/getbyidcard/${id}`);
-    this.commande = response.data;
+  methods: {
+    detail() {
+    axios.post(`http://localhost:9090/commande/getbyidcard/${this.$route.params.id}`)
+      .then(response => {
+        const commande = response.data;
+        this.commandes = {
+            quantity:commande.quantity,
+          Date: commande.date,
+          Etat: commande.etat,
+          username: commande.user[0].username,
+          email: commande.user[0].email,
+          productname : commande.products[0].productname
+        };
+        console.log(this.commandes); 
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
   },
+},
+mounted() {
+  axios.post(`http://localhost:9090/commande/getbyidcard/${this.$route.params.id}`)
+    .then(response => {
+        const commande = response.data;
+        this.commandes = {
+          quantity:commande.quantity,
+          Date: commande.date,
+          Etat: commande.etat,
+          username: commande.user[0].username,
+          email: commande.user[0].email,
+          productname : commande.products[0].productname
+        };
+        console.log(this.commandes); 
+      })
+    .catch(error => {
+      console.log(error);
+    });
+},
     props: {
+        commandeid:String,
+        etat2:String,
       color: {
         default: "light",
         validator: function (value) {

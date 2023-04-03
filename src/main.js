@@ -109,7 +109,7 @@ const routes = [
         component: SupplierMaps,
       },
       {
-        path: "/Supplier/detailcommande",
+        path: "/Supplier/detailcommande/:id",
         name: "detailcommande",
         component: DetailCommande,
       },
