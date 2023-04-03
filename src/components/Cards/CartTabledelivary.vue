@@ -155,7 +155,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :commandeid="commande._id" :etat2="commande.Etat" />
+                <table-dropdown :commandeid="commande.id" :etat2="commande.Etat" />
               </td>
             </tr>
           </tbody>
@@ -200,6 +200,7 @@
     axios.post('http://localhost:9090/commande/getShippingCarts')
       .then(response => {
         this.commandes = response.data.map(p => ({
+            id:p._id,
           Date: p.date,
           Etat: p.etat,
           username : p.user[0].username

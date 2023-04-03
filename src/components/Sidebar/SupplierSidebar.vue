@@ -130,7 +130,7 @@
                     class="fas fa-table mr-2 text-sm"
                     :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                   ></i>
-                  Tables
+                  Orders
                 </a>
               </router-link>
             </li>
