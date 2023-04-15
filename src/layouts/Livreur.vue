@@ -2,8 +2,7 @@
     <div>
       <sidebar />
       <div class="relative md:ml-64 bg-blueGray-100">
-        <admin-navbar />
-        <div></div>
+        <supplier-navbar />
         <header-stats />
         <div class="px-4 md:px-10 mx-auto w-full -m-8">
           <router-view />
@@ -14,7 +13,7 @@
   </template>
   <script>
   import SupplierNavbar from "@/components/Navbars/SupplierNavbar.vue";
-  import Sidebar from "@/components/Sidebar/SupplierSidebar.vue";
+  import Sidebar from "@/components/Sidebar/LivreurSidebar.vue";
   import HeaderStats from "@/components/Headers/HeaderStats.vue";
   import FooterAdmin from "@/components/Footers/FooterAdmin.vue";
   export default {

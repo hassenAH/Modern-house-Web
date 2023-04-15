@@ -12,6 +12,7 @@
             >
               Card Tables
             </h3>
+            
           </div>
           <form
         class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
@@ -55,17 +56,7 @@
                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                 ]"
               >
-                Budget
-              </th>
-              <th
-                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                :class="[
-                  color === 'light'
-                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                ]"
-              >
-                Status
+                Address
               </th>
               <th
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -76,16 +67,6 @@
                 ]"
               >
                 User
-              </th>
-              <th
-                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                :class="[
-                  color === 'light'
-                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                ]"
-              >
-                Completion
               </th>
               <th
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -107,55 +88,45 @@
                   :class="[
                     color === 'light' ? 'text-blueGray-600' : 'text-white',
                   ]"
-
+  
                 >
                 <li>{{ commande.Date }}</li>
                 
                 </span>
               </th>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-                0
-              </td>
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            >
+             
+              <li>{{ commande.adress }}</li>
+            </td>
               <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-              <select @change="ChangeEtat(commande.id,commande.Etat)" v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                <option value="Shipping">Shipping</option>
-                <option value="Shipped">Shipped</option>
-                 <option value="Returned">Returned</option>
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            >
+             
+              <li>{{ commande.username }}</li>
+              
         
-      </select>
-              </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-               
-                <li>{{ commande.username }}</li>
-              </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-                <div class="flex items-center">
-                  <span class="mr-2">60%</span>
-                  <div class="relative w-full">
-                    <div
-                      class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
-                    >
-                      <div
-                        style="width: 60%;"
-                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
-              >
-                <table-dropdown :commandeid="commande.id" :etat2="commande.Etat" />
-              </td>
+            </td>
+            <button
+          class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+          type="button"
+          v-on:click="ChangeEtatShipped(commande.id)"
+        >
+          Livred
+        </button>
+        <button
+          class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+          type="button"
+          v-on:click="ChangeEtatReturned(commande.id)"
+        >
+          Return
+        </button>
+        <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
+            >
+              <table-dropdown :commandeid="commande.id" :etat2="commande.Etat" />
+            </td>
             </tr>
           </tbody>
         </table>
@@ -163,39 +134,57 @@
     </div>
   </template>
   <script>
-  import TableDropdown from "@/components/Dropdowns/SupplierDropdown.vue";
-
+ 
   import axios from 'axios';
-
+  import TableDropdown from "@/components/Dropdowns/LivreurDropDown.vue";
   export default {
     data() {
       return {
         commandes: [],
         etat1:"",
         search: '',
+        etat2:"Shipping",
         refresh: false,
       };
     },
     methods: {
-  getArchive() {
-    axios.post('http://localhost:9090/commande/getShippedAndReturnedCarts')
-      .then(response => {
-        this.commandes = response.data.map(p => ({
-            id:p._id,
-            Date: new Date(p.date).toISOString().substring(0, 10),
-          Etat: p.etat,
-          username : p.user[0].username
-          
-        }));
-        console.log(this.commandes); 
-      })
-      .catch(error => {
-        console.log(error);
-      }); 
-  },
-  ChangeEtat(commandeid,etat2)
+        getencours() {
+            let userData = JSON.parse(localStorage.getItem('user'));
+            axios.post('http://localhost:9090/livraison/getid',{
+  idUser:userData
+})
+  .then(response => {
+    const data = response.data;
+    if (data && Array.isArray(data.cart)) {
+      this.commandes = [{
+        id: data.cart[0]._id,
+        Date: new Date(data.cart[0].date).toISOString().substring(0, 10),
+        username: data.cart[0].user[0].username,
+        adress: data.cart[0].user[0].adress,
+      }];
+    }
+    console.log(this.commandes); 
+  })
+  .catch(error => {
+    console.log(error);
+  });
+},
+ChangeEtatShipped(commandeid)
         {
-            axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/"+etat2)
+            axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Shipped")
+    .then(response => {
+
+       console.log(response);
+       this.refresh = !this.refresh;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+        },
+        ChangeEtatReturned(commandeid)
+        {
+            axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Returned")
     .then(response => {
 
        console.log(response);
@@ -209,12 +198,12 @@
   
 },
 mounted() {
-  this.getArchive();
+  this.getencours();
 },
 watch: {
     refresh: function (newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.getArchive(); // Call getshipping() whenever refresh changes
+        this.getencours(); // Call getshipping() whenever refresh changes
       }
     },
   },
@@ -223,14 +212,13 @@ computed: {
  filteredCommandes() {
    const query = this.search.toLowerCase();
    return this.commandes.filter(commande =>
-     commande.username.toLowerCase().includes(query) ||
-     commande.Etat.toLowerCase().includes(query)
+     commande.Date.toLowerCase().includes(query) 
    );
 },
 },
-    components: {
-      TableDropdown,
-    },
+components: {
+    TableDropdown,
+  },
     props: {
       color: {
         default: "light",

@@ -121,7 +121,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-              <select v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+              <select @change="ChangeEtat(commande.id,commande.Etat)" v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
         <option value="Order">Order</option>
         <option value="Picking inventory">Picking inventory</option>
         <option value="Sorting">Sorting</option>
@@ -176,6 +176,7 @@
         etat1:"",
         search: '',
         totalAmount:0,
+        refresh: false,
       };
     },
     methods: {
@@ -184,7 +185,7 @@
       .then(response => {
         this.commandes = response.data.map(p => ({
           id:p._id,
-          Date: p.date,
+          Date: new Date(p.date).toISOString().substring(0, 10),
           Etat: p.etat,
           username : p.user[0].username
           
@@ -207,11 +208,31 @@
         console.log(error);
       }); 
   },
+  ChangeEtat(commandeid,etat2)
+        {
+            axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/"+etat2)
+    .then(response => {
+
+       console.log(response);
+       this.refresh = !this.refresh;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+        },
   
 },
 mounted() {
   this.getAllCommandes();
 },
+watch: {
+    refresh: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.getAllCommandes(); // Call getshipping() whenever refresh changes
+      }
+    },
+  },
 computed: {
  
   filteredCommandes() {

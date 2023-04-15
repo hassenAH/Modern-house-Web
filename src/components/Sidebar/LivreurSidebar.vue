@@ -58,62 +58,16 @@
           <h6
             class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
           >
-            Fournisseur Layout Pages
+            Livreur Layout Pages
           </h6>
           <!-- Navigation -->
   
           <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-            <li class="items-center">
-              <router-link
-                to="/Supplier/dashboard"
-                v-slot="{ href, navigate, isActive }"
-              >
-                <a
-                  :href="href"
-                  @click="navigate"
-                  class="text-xs uppercase py-3 font-bold block"
-                  :class="[
-                    isActive
-                      ? 'text-emerald-500 hover:text-emerald-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500',
-                  ]"
-                >
-                  <i
-                    class="fas fa-tv mr-2 text-sm"
-                    :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                  ></i>
-                  Dashboard
-                </a>
-              </router-link>
-            </li>
-  
-            <li class="items-center">
-              <router-link
-                to="/Supplier/settings"
-                v-slot="{ href, navigate, isActive }"
-              >
-                <a
-                  :href="href"
-                  @click="navigate"
-                  class="text-xs uppercase py-3 font-bold block"
-                  :class="[
-                    isActive
-                      ? 'text-emerald-500 hover:text-emerald-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500',
-                  ]"
-                >
-                  <i
-                    class="fas fa-tools mr-2 text-sm"
-                    :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                  ></i>
-                  Settings
-                </a>
-              </router-link>
-            </li>
+           
   
             <li class="items-center">
             <router-link
-              to="/Supplier/product"
+              to="/Livreur/shipping"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -130,14 +84,13 @@
                   class="fas fa-table mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Products
+                Livraison Disponible
               </a>
             </router-link>
           </li>
-          
           <li class="items-center">
               <router-link
-                to="/Supplier/tables"
+                to="/Livreur/tables"
                 v-slot="{ href, navigate, isActive }"
               >
                 <a
@@ -154,13 +107,13 @@
                     class="fas fa-table mr-2 text-sm"
                     :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                   ></i>
-                  Orders
+                  Livraison en cours
                 </a>
               </router-link>
             </li>
           <li class="items-center">
             <router-link
-              to="/Supplier/shipping"
+              to="/Livreur/archive"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -177,13 +130,13 @@
                   class="fas fa-table mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Shipping
+                Mes Livraison
               </a>
             </router-link>
           </li>
           <li class="items-center">
             <router-link
-              to="/Supplier/archive"
+              to="/Livreur/retour"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -200,10 +153,13 @@
                   class="fas fa-table mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Archive
+                Mes Retours
               </a>
             </router-link>
           </li>
+            
+          
+          
           </ul>
   
           <!-- Divider -->

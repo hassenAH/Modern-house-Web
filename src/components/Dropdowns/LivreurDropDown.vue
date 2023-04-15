@@ -16,7 +16,7 @@
           block: dropdownPopoverShow,
         }"
       >
-        <router-link  :to="'/Supplier/detailcommande/' + commandeid"
+        <router-link  :to="'/Livreur/detailcommande/' + commandeid"
                 v-slot="{ href ,navigate }"
               >
         <a

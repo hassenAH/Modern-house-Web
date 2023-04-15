@@ -16,6 +16,7 @@ import App from "@/App.vue";
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 import Supplier from "@/layouts/Supplier.vue";
+import Livreur from "@/layouts/Livreur.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
@@ -35,6 +36,14 @@ import DetailCommande from "@/views/Supplier/DetailCommande.vue";
 import shipping from "@/views/Supplier/Shipping.vue";
 import archive from "@/views/Supplier/Archive.vue";
 
+// views for Livreur layout
+
+
+import LivreurTables from "@/views/Livreur/Tables.vue";
+import Livreurshipping from "@/views/Livreur/Shipping.vue";
+import Livreurarchive from "@/views/Livreur/Archive.vue";
+import Retour from "@/views/Livreur/Retour.vue";
+import DetailCommandeLiv from "@/views/Livreur/DetailCommande.vue";
 // views for Auth layout
 
 import Login from "@/views/auth/Login.vue";
@@ -120,6 +129,34 @@ const routes = [
       {
         path: "/Supplier/archive",
         component: archive,
+      },
+    ],
+  },
+  {
+    path: "/Livreur",
+    redirect: "/Livreur/Shipping",
+    component: Livreur,
+    children: [
+      {
+        path: "/Livreur/tables",
+        component: LivreurTables,
+      },
+      {
+        path: "/Livreur/shipping",
+        component: Livreurshipping,
+      },
+      {
+        path: "/Livreur/archive",
+        component: Livreurarchive,
+      },
+      {
+        path: "/Livreur/detailcommande/:id",
+        name: "detailcommande",
+        component: DetailCommandeLiv,
+      },
+      {
+        path: "/Livreur/retour",
+        component: Retour,
       },
     ],
   },

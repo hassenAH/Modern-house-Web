@@ -192,6 +192,11 @@ export default {
             
           this.$router.push('/Supplier')
           }
+          else if(result.data.role == "Livreur")
+          {
+            
+          this.$router.push('/Livreur')
+          }
           else if(result.data.role == "Admin" )
           {
             

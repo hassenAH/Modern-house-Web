@@ -121,7 +121,7 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-              <select v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+              <select @change="ChangeEtat(commande.id,commande.Etat)" v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option value="Packing">Packing</option>
                 <option value="Shipping">Shipping</option>
         <option value="Shipped">Shipped</option>
@@ -165,34 +165,15 @@
   </template>
   <script>
   import TableDropdown from "@/components/Dropdowns/DelevaryDropDown.vue";
-  
-  import bootstrap from "@/assets/img/bootstrap.jpg";
-  import angular from "@/assets/img/angular.jpg";
-  import sketch from "@/assets/img/sketch.jpg";
-  import react from "@/assets/img/react.jpg";
-  import vue from "@/assets/img/react.jpg";
-  
-  import team1 from "@/assets/img/team-1-800x800.jpg";
-  import team2 from "@/assets/img/team-2-800x800.jpg";
-  import team3 from "@/assets/img/team-3-800x800.jpg";
-  import team4 from "@/assets/img/team-4-470x470.png";
   import axios from 'axios';
 
   export default {
     data() {
       return {
-        bootstrap,
-        angular,
-        sketch,
-        react,
-        vue,
-        team1,
-        team2,
-        team3,
-        team4,
         commandes: [],
         etat1:"",
         search: '',
+        refresh: false,
       };
     },
     methods: {
@@ -201,7 +182,7 @@
       .then(response => {
         this.commandes = response.data.map(p => ({
             id:p._id,
-          Date: p.date,
+            Date: new Date(p.date).toISOString().substring(0, 10),
           Etat: p.etat,
           username : p.user[0].username
           
@@ -212,12 +193,30 @@
         console.log(error);
       }); 
   },
-  
-  
+  ChangeEtat(commandeid,etat2)
+        {
+            axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/"+etat2)
+    .then(response => {
+
+       console.log(response);
+       this.refresh = !this.refresh;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+        },
 },
 mounted() {
   this.getshipping();
 },
+watch: {
+    refresh: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.getshipping(); // Call getshipping() whenever refresh changes
+      }
+    },
+  },
 computed: {
  
  filteredCommandes() {
