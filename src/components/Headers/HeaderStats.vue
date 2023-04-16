@@ -5,24 +5,13 @@
       <div>
         <!-- Card stats -->
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="TRAFFIC"
-              statTitle="350,897"
-              statArrow="up"
-              statPercent="3.48"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="far fa-chart-bar"
-              statIconColor="bg-red-500"
-            />
-          </div>
+         
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
               statSubtitle="NEW USERS"
-              statTitle="2,356"
-              statArrow="down"
-              statPercent="3.48"
+              :statTitle= "nbUser"
+              statArrow=""
+              statPercent=""
               statPercentColor="text-red-500"
               statDescripiron="Since last week"
               statIconName="fas fa-chart-pie"
@@ -32,7 +21,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
               statSubtitle="SALES"
-              statTitle="924"
+              :statTitle="totalAmount"
               statArrow="down"
               statPercent="1.10"
               statPercentColor="text-orange-500"
@@ -61,10 +50,63 @@
 
 <script>
 import CardStats from "@/components/Cards/CardStats.vue";
-
+import axios from 'axios';
 export default {
+  data() {
+      return {
+        Users: [],
+        commande:[],
+        nbUser:"0",
+        totalAmount:0
+        
+      }},
   components: {
     CardStats,
+    
+  },methods:{
+   
+  getTotalSales(){
+    axios.get('http://localhost:9090/commande/getAllcommanade')
+      .then(response => {
+        
+        this.commande= response.data;
+       
+        this.commande.forEach(element => {
+          console.log(element._id)
+          this.nbSales += this.gettotal(element._id);
+          
+        });
+        console.log(this.commande); 
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
+  }, gettotal(commandeid) {
+    axios.get('http://localhost:9090/commande/total',
+    {
+       _id:commandeid
+    })
+    .then(response => {
+          this.totalAmount = response.data.totalAmount;
+        })
+      .catch(error => {
+        console.log(error);
+      }); 
   },
+    getUserLastMonth() {
+    axios.get('http://localhost:9090/user/countLastWeekUsers')
+      .then(response => {
+        
+        this.nbUser= response.data;
+        console.log(this.nbUser); 
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
+  }},
+  mounted() {
+    this.getTotalSales()
+  this.getUserLastMonth();
+},
 };
 </script>
