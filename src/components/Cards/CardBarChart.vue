@@ -23,9 +23,48 @@
 </template>
 <script>
 import Chart from "chart.js";
-export default {
-  mounted: function () {
-    this.$nextTick(function () {
+import axios from 'axios';
+export default { 
+  
+  data() {
+        return {
+          Users: [],
+          January:0,
+          February:0,
+          March:0,
+          April:0,
+          May:0,
+          June:0,
+          July:0,
+         
+          
+        }},
+        methods:{
+
+          getTotalorders(){
+      axios.get('http://localhost:9090/commande/CardsBymonth')
+        .then(response => {
+          
+          
+         
+          this.January=response.data.months['1']?.length;
+          this.Users.push(this.January)
+          
+          this.February= response.data.months['2']?.length;
+          this.Users.push(this.February)
+          this.March= response.data.months['3']?.length;
+          this.Users.push(this.March)
+          this.April= response.data.months['4']?.length;
+          this.Users.push(this.April)
+          this.May= response.data.months['5']?.length;
+          this.Users.push(this.May)
+          this.June= response.data.months['6']?.length;
+          this.Users.push(this.June)
+          this.July= response.data.months['7']?.length;
+          this.Users.push(this.July)
+          
+          this.$nextTick(function () {
+      
       let config = {
         type: "bar",
         data: {
@@ -43,7 +82,7 @@ export default {
               label: new Date().getFullYear(),
               backgroundColor: "#ed64a6",
               borderColor: "#ed64a6",
-              data: [30, 78, 56, 34, 100, 45, 13],
+              data: this.Users,
               fill: false,
               barThickness: 8,
             },
@@ -121,6 +160,17 @@ export default {
       let ctx = document.getElementById("bar-chart").getContext("2d");
       window.myBar = new Chart(ctx, config);
     });
+        })
+        .catch(error => {
+          console.log(error);
+        }); 
+    },
+        },
+  mounted(){
+    this.getTotalorders();
+   
+    
+  
   },
 };
 </script>

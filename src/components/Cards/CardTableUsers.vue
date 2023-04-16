@@ -221,7 +221,7 @@
         {
           response.data.forEach(cart => {
           if (cart.paid)
-              a++;
+              a+= cart.quantity;
         })
        console.log(response);
         }

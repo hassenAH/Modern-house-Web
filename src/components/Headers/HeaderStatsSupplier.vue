@@ -33,8 +33,8 @@
             </div>
             <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
               <card-stats
-                statSubtitle="PERFORMANCE"
-                statTitle="49,65%"
+                statSubtitle="TOTAL ORDERS"
+                :statTitle="totalOrders"
                 statArrow="up"
                 statPercent="12"
                 statPercentColor="text-emerald-500"
@@ -58,7 +58,7 @@
           Users: [],
           commande:[],
           nbProduct:"0",
-          totalAmount:0
+          totalOrders:0
           
         }},
     components: {
@@ -70,22 +70,9 @@
       axios.get('http://localhost:9090/commande/getAllcommanade')
         .then(response => {
           
-          this.commande= response.data;
+          this.totalOrders= response.data.length;
         
-          this.commande.forEach(element => {
-            axios.post('http://localhost:9090/commande/total',
-      {
-         _id:element._id
-      })
-      .then(response => {
-        this.nbSales +=response.data.totalAmount;
-          })  
-        .catch(error => {
-          console.log(error);
-        }); 
-            
-            
-          });
+        
          
         })
         .catch(error => {
