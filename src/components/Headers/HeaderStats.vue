@@ -14,7 +14,8 @@
               statPercent=""
               statPercentColor="text-red-500"
               statDescripiron="Since last week"
-              statIconName="fas fa-chart-pie"
+              statIconName="fas fa-users"
+              
               statIconColor="bg-orange-500"
             />
           </div>
@@ -26,7 +27,7 @@
               statPercent="1.10"
               statPercentColor="text-orange-500"
               statDescripiron="Since yesterday"
-              statIconName="fas fa-users"
+              statIconName="fas fa-chart-pie"
               statIconColor="bg-pink-500"
             />
           </div>
@@ -70,18 +71,27 @@ export default {
       .then(response => {
         
         this.commande= response.data;
-       
+      
         this.commande.forEach(element => {
-          console.log(element._id)
-          this.nbSales += this.gettotal(element._id);
+          axios.post('http://localhost:9090/commande/total',
+    {
+       _id:element._id
+    })
+    .then(response => {
+      this.nbSales +=response.data.totalAmount;
+        })  
+      .catch(error => {
+        console.log(error);
+      }); 
+          
           
         });
-        console.log(this.commande); 
+       
       })
       .catch(error => {
         console.log(error);
       }); 
-  }, gettotal(commandeid) {
+  }, gettotal(commandeid ) {
     axios.get('http://localhost:9090/commande/total',
     {
        _id:commandeid
