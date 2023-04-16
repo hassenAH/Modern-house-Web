@@ -8,8 +8,8 @@
            
             <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
               <card-stats
-                statSubtitle="NEW USERS"
-                :statTitle= "nbUser"
+                statSubtitle="NEW Product"
+                :statTitle= "nbProduct"
                 statArrow=""
                 statPercent=""
                 statPercentColor="text-red-500"
@@ -57,7 +57,7 @@
         return {
           Users: [],
           commande:[],
-          nbUser:"0",
+          nbProduct:"0",
           totalAmount:0
           
         }},
@@ -104,11 +104,11 @@
         }); 
     },
       getUserLastMonth() {
-      axios.get('http://localhost:9090/user/countLastWeekUsers')
+      axios.get('http://localhost:9090/produit/countLastsProduct')
         .then(response => {
           
-          this.nbUser= response.data;
-          console.log(this.nbUser); 
+          this.nbProduct= response.data;
+          console.log(this.nbProduct); 
         })
         .catch(error => {
           console.log(error);
