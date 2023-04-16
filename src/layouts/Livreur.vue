@@ -14,7 +14,7 @@
   <script>
   import SupplierNavbar from "@/components/Navbars/SupplierNavbar.vue";
   import Sidebar from "@/components/Sidebar/LivreurSidebar.vue";
-  import HeaderStats from "@/components/Headers/HeaderStats.vue";
+  import HeaderStats from "@/components/Headers/HeaderLivreur.vue";
   import FooterAdmin from "@/components/Footers/FooterAdmin.vue";
   export default {
     name: "Supplier-layout",
