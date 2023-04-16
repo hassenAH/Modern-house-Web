@@ -23,6 +23,7 @@
             <i class="fas fa-search"></i>
           </span>
           <input
+          v-model="search"
             type="text"
             placeholder="Search here..."
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
@@ -99,7 +100,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody v-for= "user in users" :key="user._id"  @refresh-table="handleRefreshTable">
+          <tbody v-for= "user in filteredUsers" :key="user._id" >
             <tr>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
@@ -144,7 +145,7 @@
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
                
-              {{ user.productsbought }}
+              {{ user.products }}
               </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
@@ -168,9 +169,8 @@
   export default {
     data() {
       return {
-        Status:"",
+        search:"",
         users: [],
-        refreshTable: false,
         dataFromChild:null
       };
     },
@@ -212,10 +212,22 @@
               {
                 element.Status="unban"
               }
+              
+    
               axios.get('http://localhost:9090/user/getcommandes/'+element._id)
     .then(response => {
-      element.productsbought= response.data.count();
+        var a = 0 ;
+        if(response.data)
+        {
+          response.data.forEach(cart => {
+          if (cart.paid)
+              a++;
+        })
        console.log(response);
+        }
+        
+       element.products= a;
+       
     })
     .catch(error => {
       console.log(error);
@@ -229,6 +241,7 @@
     .catch(error => {
       console.log(error);
     });
+    
   },
   receiveDataFromChild(data) {
       this.dataFromChild = data;
@@ -243,6 +256,15 @@
       // Update table logic here
     },
   
+},computed: {
+ 
+ filteredUsers() {
+   const query = this.search.toLowerCase();
+   return this.users.filter(user =>
+     
+     user.email.toLowerCase().includes(query)
+   );
+ },
 },
 watch: {
     dataFromChild() {
@@ -250,7 +272,7 @@ watch: {
     },},
 mounted() {
   this.getAllUsers();
-},
+}, 
     components: {
       TableDropdown,
     },
