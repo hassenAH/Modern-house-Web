@@ -151,7 +151,6 @@ const routes = [
       },
       {
         path: "/Livreur/detailcommande/:id",
-        name: "detailcommande",
         component: DetailCommandeLiv,
       },
       {
