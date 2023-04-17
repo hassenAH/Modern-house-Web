@@ -97,6 +97,25 @@
                     ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                 ]"
+              >
+              Role
+              </th>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                :class="[
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                ]"
+              ></th>
+              
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                :class="[
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                ]"
               ></th>
             </tr>
           </thead>
@@ -117,7 +136,7 @@
                   ]"
 
                 >
-                {{ user.first_name }} {{ user.last_name }}
+                {{ user.username }}
                 
                 </span>
               </th>
@@ -148,6 +167,18 @@
               {{ user.products }}
               </td>
               <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+              >
+              <select @change="ChangeRole(user)" v-model="user.role" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+        <option value="Supplier" >Supplier</option>
+        <option value="Admin">Admin</option>
+        <option value="user">user</option>
+        <option value="Livreur">Livreur</option>
+        
+      </select>
+              </td>
+              
+              <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
                 <table-dropdown :userid="user._id" @child-event="receiveDataFromChild"/>
@@ -175,7 +206,18 @@
       };
     },
     methods: {
-      
+      ChangeRole(user){
+        axios.post('http://localhost:9090/user/changeRole/'+user._id,{
+          role: user.role
+        })
+    .then(response => {
+
+       console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+      },
       BanOrUnban(user){
         if(user.Status == "unban")
         {

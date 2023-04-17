@@ -248,7 +248,7 @@ mounted() {
     filteredUsers() {
       const query = this.search.toLowerCase();
       return this.users.filter(user =>
-        user.first_name.toLowerCase().includes(query) ||
+      
         user.email.toLowerCase().includes(query)
       );
     },
