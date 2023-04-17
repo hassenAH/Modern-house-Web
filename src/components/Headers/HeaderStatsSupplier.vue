@@ -99,7 +99,7 @@
         }); 
     },
       getUserLastMonth() {
-      axios.get('http://localhost:9090/produit/countLastsProduct')
+      axios.get('http://localhost:9090/produit/ ')
         .then(response => {
           
           this.nbProduct= response.data;

@@ -200,7 +200,6 @@ computed: {
 filteredCommandes() {
  const query = this.search.toLowerCase();
  return this.commandes.filter(commande =>
-   commande.username.toLowerCase().includes(query) ||
    commande.adress.toLowerCase().includes(query)
  );
 },
