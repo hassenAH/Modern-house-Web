@@ -66,43 +66,16 @@ export default {
     
   },methods:{
    
-  getTotalSales(){
-    axios.get('http://localhost:9090/commande/getAllcommanade')
+gettotalSales() {
+      axios.post('http://localhost:9090/produit/getTotalSales',
+      )
       .then(response => {
-        
-        this.commande= response.data;
-      
-        this.commande.forEach(element => {
-          axios.post('http://localhost:9090/commande/total',
-    {
-       _id:element._id
-    })
-    .then(response => {
-      this.nbSales +=response.data.totalAmount;
-        })  
-      .catch(error => {
-        console.log(error);
-      }); 
-          
-          
-        });
-       
-      })
-      .catch(error => {
-        console.log(error);
-      }); 
-  }, gettotal(commandeid ) {
-    axios.get('http://localhost:9090/commande/total',
-    {
-       _id:commandeid
-    })
-    .then(response => {
-          this.totalAmount = response.data.totalAmount;
-        })
-      .catch(error => {
-        console.log(error);
-      }); 
-  },
+            this.totalAmount = response.data;
+          })
+        .catch(error => {
+          console.log(error);
+        }); 
+    },
     getUserLastMonth() {
     axios.get('http://localhost:9090/user/countLastWeekUsers')
       .then(response => {
@@ -115,7 +88,8 @@ export default {
       }); 
   }},
   mounted() {
-    this.getTotalSales()
+    this.gettotalSales()
+   
   this.getUserLastMonth();
 },
 };

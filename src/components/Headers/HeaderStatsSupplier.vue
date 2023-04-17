@@ -58,13 +58,21 @@
           Users: [],
           commande:[],
           nbProduct:"0",
+          totalAmount:0,
           totalOrders:0
-          
+          ,
+          user:null
         }},
     components: {
       CardStats,
       
-    },methods:{
+    },created() {
+    // Retrieve the user's data from local storage
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData);
+    }
+  },methods:{
      
     getTotalSales(){
       axios.get('http://localhost:9090/commande/getAllcommanade')
@@ -78,13 +86,13 @@
         .catch(error => {
           console.log(error);
         }); 
-    }, gettotal(commandeid ) {
-      axios.get('http://localhost:9090/commande/total',
-      {
-         _id:commandeid
-      })
+    }, gettotalSales() {
+      axios.post('http://localhost:9090/produit/getTotalSalesbySupplier',{
+        user: this.user._id
+      }
+      )
       .then(response => {
-            this.totalAmount = response.data.totalAmount;
+            this.totalAmount = response.data;
           })
         .catch(error => {
           console.log(error);
@@ -102,6 +110,7 @@
         }); 
     }},
     mounted() {
+        this.gettotalSales()
       this.getTotalSales()
     this.getUserLastMonth();
   },
