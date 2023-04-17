@@ -345,8 +345,8 @@ regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
        }
      },
      validateFirst_Name(value){
-       let difference = 8 - value.length;
-       if (value.length<8) {
+       let difference = 2 - value.length;
+       if (value.length<2) {
          this.msg['first_name'] = 'Must be 8 characters! '+ difference + ' characters left' ;
        } else {
           this.msg['first_name'] = '';
@@ -354,8 +354,8 @@ regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
      }
      ,
      validatelast_name(value){
-       let difference = 8 - value.length;
-       if (value.length<8) {
+       let difference = 2 - value.length;
+       if (value.length<2) {
          this.msg['last_name'] = 'Must be 8 characters! '+ difference + ' characters left' ;
        } else {
           this.msg['last_name'] = '';

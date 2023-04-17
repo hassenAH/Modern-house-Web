@@ -5,7 +5,19 @@
       <div>
         <!-- Card stats -->
         <div class="flex flex-wrap">
-         
+          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+              <card-stats
+                statSubtitle="NEW Products"
+                :statTitle= "nbProduct"
+                statArrow=""
+                statPercent=""
+                statPercentColor="text-red-500"
+                statDescripiron="Since last week"
+                statIconName="fas fa-percent"
+                
+                statIconColor="bg-emerald-500"
+              />
+            </div>
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
               statSubtitle="NEW USERS"
@@ -31,18 +43,7 @@
               statIconColor="bg-pink-500"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="PERFORMANCE"
-              statTitle="49,65%"
-              statArrow="up"
-              statPercent="12"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="fas fa-percent"
-              statIconColor="bg-emerald-500"
-            />
-          </div>
+          
         </div>
       </div>
     </div>
@@ -58,14 +59,25 @@ export default {
         Users: [],
         commande:[],
         nbUser:"0",
-        totalAmount:0
-        
+        totalAmount:0,
+        nbProduct:0
       }},
   components: {
     CardStats,
     
   },methods:{
-   
+    
+      getProductLastMonth() {
+      axios.get('http://localhost:9090/produit/countLastsProduct ')
+        .then(response => {
+          
+          this.nbProduct= response.data;
+          console.log(this.nbProduct); 
+        })
+        .catch(error => {
+          console.log(error);
+        }); 
+    },
 gettotalSales() {
       axios.post('http://localhost:9090/produit/getTotalSales',
       )
@@ -88,7 +100,8 @@ gettotalSales() {
       }); 
   }},
   mounted() {
-    this.gettotalSales()
+    this.getProductLastMonth();
+    this.gettotalSales();
    
   this.getUserLastMonth();
 },
