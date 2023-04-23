@@ -93,11 +93,13 @@
               
               </span>
             </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-             
-              <li>{{ commande.adress }}</li>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                <div class="flex items-center">
+                      <li>{{ commande.adress }}</li>
+                      <a :href="'https://www.google.com/maps/search/' + encodeURIComponent(commande.adress)" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-map-marker-alt ml-2 text-red-500 cursor-pointer"></i>
+                          </a>
+                          </div>
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -197,11 +199,14 @@ watch: {
   },
 computed: {
 
-filteredCommandes() {
- const query = this.search.toLowerCase();
- return this.commandes.filter(commande =>
-   commande.adress.toLowerCase().includes(query)
- );
+  filteredCommandes() {
+  const query = this.search.toLocaleLowerCase();
+  return this.commandes.filter(commande => {
+    if (commande.adress) { // Check if commande.adress is not undefined
+      return commande.adress.toLowerCase().includes(query);
+    }
+    return false; // Return false if commande.adress is undefined
+  });
 },
 },
   components: {
