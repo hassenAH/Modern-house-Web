@@ -10,8 +10,9 @@
               class="font-semibold text-lg"
               :class="[color === 'light' ? 'text-blueGray-700' : 'text-white']"
             >
-              Card Users Tables
+              Card Livreur Tables
             </h3>
+            
           </div>
           <form
         class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
@@ -32,7 +33,6 @@
       </form>
         </div>
         
-        
       </div>
       
       <div class="block w-full overflow-x-auto">
@@ -48,7 +48,7 @@
                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                 ]"
               >
-                Name 
+                Name
               </th>
               <th
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -88,27 +88,8 @@
                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                 ]"
               >
-              Product bought
+              Company
               </th>
-              <th
-                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                :class="[
-                  color === 'light'
-                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                ]"
-              >
-              Role
-              </th>
-              <th
-                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                :class="[
-                  color === 'light'
-                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                    : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                ]"
-              ></th>
-              
               <th
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                 :class="[
@@ -136,7 +117,7 @@
                   ]"
 
                 >
-                {{ user.username }}
+                {{ user.first_name }} {{ user.last_name }}
                 
                 </span>
               </th>
@@ -164,24 +145,12 @@
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
                
-              {{ user.products }}
+              {{ user.company_name }}
               </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-              <select @change="ChangeRole(user)" v-model="user.role" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-        <option value="Supplier" >Supplier</option>
-        <option value="Admin">Admin</option>
-        <option value="user">user</option>
-        <option value="Livreur">Livreur</option>
-        
-      </select>
-              </td>
-              
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
-                <table-dropdown :userid="user._id" @child-event="receiveDataFromChild"/>
+                <table-dropdown :userid="user._id"  @child-event="receiveDataFromChild"/>
               </td>
             </tr>
           </tbody>
@@ -206,22 +175,7 @@
       };
     },
     methods: {
-      ChangeRole(user){
-        axios.post('http://localhost:9090/user/changeRole/'+user._id,{
-          role: user.role
-        })
-    .then(response => {
-      const index = this.users.findIndex(user =>
-        user._id == this.dataFromChild);
-      if (index !== -1) {
-        this.users.splice(index, 1);
-      }
-       console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-      },
+      
       BanOrUnban(user){
         if(user.Status == "unban")
         {
@@ -248,9 +202,9 @@
     axios.get('http://localhost:9090/user/')
     .then(response => {
         response.data.forEach(element => {
-            if(element.role!="Admin" && element.role =="user")
+            if(element.role!="Admin" && element.role =="Livreur")
             {
-                if(element.banned)
+              if(element.banned)
               {
                 element.Status="ban"
               }
@@ -258,26 +212,6 @@
               {
                 element.Status="unban"
               }
-              
-    
-              axios.get('http://localhost:9090/user/getcommandes/'+element._id)
-    .then(response => {
-        var a = 0 ;
-        if(response.data)
-        {
-          response.data.forEach(cart => {
-          if (cart.paid)
-              a+= cart.quantity;
-        })
-       console.log(response);
-        }
-        
-       element.products= a;
-       
-    })
-    .catch(error => {
-      console.log(error);
-    });
                 this.users.push(element)
             }
         });
@@ -287,7 +221,6 @@
     .catch(error => {
       console.log(error);
     });
-    
   },
   receiveDataFromChild(data) {
       this.dataFromChild = data;
@@ -298,27 +231,28 @@
       if (index !== -1) {
         this.users.splice(index, 1);
       }
-      
-      // Update table logic here
     },
   
-},computed: {
- 
- filteredUsers() {
-   const query = this.search.toLowerCase();
-   return this.users.filter(user =>
-     
-     user.email.toLowerCase().includes(query)
-   );
- },
 },
 watch: {
     dataFromChild() {
       this.updateTable();
-    },},
+    },
+  },
 mounted() {
+  
   this.getAllUsers();
-}, 
+
+}, computed: {
+ 
+    filteredUsers() {
+      const query = this.search.toLowerCase();
+      return this.users.filter(user =>
+      
+        user.email.toLowerCase().includes(query)
+      );
+    },
+  },
     components: {
       TableDropdown,
     },

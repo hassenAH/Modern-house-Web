@@ -36,7 +36,11 @@
             >
              Sales
             </th>
-           
+            <th
+            class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+              >
+                Owner
+              </th>
           </tr>
         </thead>
         <tbody>
@@ -49,9 +53,25 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-            {{ p.quantitySales }}
+            {{ p.quantitySales * p.price}} $
             </td>
-            
+            <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+            >
+              <img
+              :src="`http://localhost:9090/img/${p.user.Image}` "
+              class="h-12 w-12 bg-white rounded-full border"
+                  alt="..."
+              />
+                <span
+                class="ml-3 font-bold"
+                  
+
+                >
+                {{ p.user.first_name }} {{p.user.last_name }}
+                
+                </span>
+              </th>
           </tr>
          
         </tbody>
@@ -84,6 +104,15 @@ export default {
    .then(response => {
      this.Products = response.data;
      console.log(this.Products)
+     this.Products.forEach(element => {
+        axios.get('http://localhost:9090/user/'+element.user[0])
+      .then(response => {
+        element.user = response.data;
+        console.log(element);
+      })
+      .catch(error => {
+        console.log(error);
+      });})
    })
    .catch(error => {
      console.log(error);

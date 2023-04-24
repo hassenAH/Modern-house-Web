@@ -101,31 +101,21 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                <div class="flex items-center">
+               
                   <span class="mr-2">60%</span>
-                  <div class="relative w-full">
-                    <div
-                      class="overflow-hidden h-2 text-xs flex rounded bg-red-200"
-                    >
-                      <div
-                        style="width: 60%;"
-                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                      ></div>
-                    </div>
-                  </div>
-                </div>
+                 
               </td>
-              <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"  
+              <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center" 
                 
               >
               <img
               :src="`http://localhost:9090/img/${p.user.Image}` "
-                class="h-12 w-12 bg-white rounded-full border"
-                alt="..."
+              class="h-12 w-12 bg-white rounded-full border"
+                  alt="..."
               />
                 <span
-                  class="ml-3 font-bold" 
+                class="ml-3 font-bold"
                   :class="[
                     color === 'light' ? 'text-blueGray-600' : 'text-white',
                   ]"
@@ -134,7 +124,7 @@
                 {{ p.user.first_name }} {{p.user.last_name }}
                 
                 </span>
-            </th>
+              </td>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               >
