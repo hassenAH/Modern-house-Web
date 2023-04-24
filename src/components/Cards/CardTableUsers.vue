@@ -202,6 +202,8 @@
       return {
         search:"",
         users: [],
+        userSupplier:[],
+        userlivreur: [],
         dataFromChild:null
       };
     },
@@ -211,10 +213,20 @@
           role: user.role
         })
     .then(response => {
-      const index = this.users.findIndex(user =>
-        user._id == this.dataFromChild);
+      var index = this.users.findIndex(u =>
+        u._id == user._id);
       if (index !== -1) {
         this.users.splice(index, 1);
+        if(user.role == "Livreur")
+        {
+          this.userlivreur.push(user);
+          localStorage.setItem('userLivreur', this.userlivreur);
+        }
+        else if(user.role == "Supplier")
+        {
+          this.userSupplier.push(user);
+          localStorage.setItem('userSupplier', this.userSupplier);
+        }
       }
        console.log(response);
     })
@@ -316,6 +328,12 @@ watch: {
     dataFromChild() {
       this.updateTable();
     },},
+    created() {
+    // Retrieve the user's data from local storage
+     this.userSupplier = localStorage.getItem('userSupplier');
+    this.userlivreur = localStorage.getItem('userLivreur');
+   
+  },
 mounted() {
   this.getAllUsers();
 }, 

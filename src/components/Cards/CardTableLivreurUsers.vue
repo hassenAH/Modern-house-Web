@@ -215,6 +215,7 @@
                 this.users.push(element)
             }
         });
+        localStorage.setItem('userLivreur', this.users);
        
       
     })
@@ -244,13 +245,18 @@ mounted() {
   this.getAllUsers();
 
 }, computed: {
- 
+    
     filteredUsers() {
+
       const query = this.search.toLowerCase();
-      return this.users.filter(user =>
+    
       
-        user.email.toLowerCase().includes(query)
-      );
+        return this.users.filter(user =>
+      
+      user.email.toLowerCase().includes(query)
+    );
+      
+     
     },
   },
     components: {
