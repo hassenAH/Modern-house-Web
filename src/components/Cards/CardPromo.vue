@@ -62,22 +62,27 @@
                 >
                 ExpirationDate
                 </label>
-                <div style="padding-top: 0px;
-  margin-top: 0px;
-  font-size: 12px; color:red;">
-                  <span v-if="msg.ExpirationDate">{{msg.ExpirationDate}}</span>
-                </div>
+                
                 
                 <input
                 type="date"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="expirationDate" 
                 />
+                <div style="padding-top: 0px;
+  margin-top: 0px;
+  font-size: 12px; color:red;">
+                  <span v-if="msg.ExpirationDate">{{msg.ExpirationDate}}</span>
+                </div>
               </div>
             </div>
            
             <div class="w-full lg:w-4/12 px-4">
-              
+                <div style="padding-top: 0px;
+  margin-top: 0px;
+  font-size: 12px; color:red;">
+                  <span v-if="msg.Alert">{{msg.Alert}}</span>
+                </div>
             </div>
           </div>
   
@@ -139,7 +144,7 @@
     methods: {
         validateExpirationDate(value){
             var date1 = moment(value).format("dd-mm-yyyy")
-var date2 = moment(Date().now()).format("dd-mm-yyyy")
+var date2 = moment(new Date()).format("dd-mm-yyyy")
 if(date1 <  date2){
     //Do your thing
     this.msg['ExpirationDate'] = '';
@@ -150,7 +155,13 @@ if(date1 <  date2){
      },
      async handleSubmit() {
         this.submitting = true;
-        let result = await axios
+        if(this.msg.length>0 )
+        {
+            this.msg['Alert'] = 'You need to complete the Form';   
+        }
+        else
+        {
+            let result = await axios
           .post("http://localhost:9090/Promo/add/", {
             code: this.code,
             discount: this.discount,
@@ -162,10 +173,9 @@ if(date1 <  date2){
   
           })
           console.warn(result);
-          if(result.status == 200 )
-          {
-            localStorage.setItem('user', JSON.stringify(result.data));
-          }
+        }
+        
+         
           
       },
   }
