@@ -31,6 +31,7 @@ import Maps from "@/views/admin/Maps.vue";
 import SupplierDashboard from "@/views/Supplier/Dashboard.vue";
 import SupplierSettings from "@/views/Supplier/Settings.vue";
 import SupplierTables from "@/views/Supplier/Tables.vue";
+import SuplierCodePromo from "@/views/Supplier/SuplierCodePromoTables.vue";
 import SupplierMaps from "@/views/Supplier/Maps.vue";
 import DetailCommande from "@/views/Supplier/DetailCommande.vue";
 import shipping from "@/views/Supplier/Shipping.vue";
@@ -109,6 +110,10 @@ const routes = [
       {
         path: "/Supplier/tables",
         component: SupplierTables,
+      }, 
+      {
+        path: "/Supplier/Promos",
+        component: SuplierCodePromo,
       }, {
         path: "/Supplier/product",
         component: product,
