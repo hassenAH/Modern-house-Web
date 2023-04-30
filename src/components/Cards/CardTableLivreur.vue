@@ -16,6 +16,7 @@
         <form
       class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
     >
+    
       <div class="relative flex w-full flex-wrap items-stretch">
         <span
           class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
@@ -113,13 +114,16 @@
              
               <li>{{ commande.telephone_number }}</li>
             </td>
-            <button
+            <div>
+              <button
           class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
           v-on:click="addtopanel(commande.id)"
         >
           Accept
         </button>
+            </div>
+            
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
             >
@@ -133,9 +137,19 @@
 </template>
 <script>
 import TableDropdown from "@/components/Dropdowns/LivreurDropDown.vue";
-
 import axios from 'axios';
-
+import Swall from 'sweetalert2'
+const Toast = Swall.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swall.stopTimer)
+    toast.addEventListener('mouseleave', Swall.resumeTimer)
+  }
+})
 export default {
   data() {
     return {
@@ -144,6 +158,9 @@ export default {
       search: '',
       etat2:"Shipping",
       refresh: false,
+      showSuccessModal: false,
+        showErrorModal: false,
+        
     };
   },
   methods: {
@@ -171,18 +188,18 @@ getshipping() {
       {
         // retrieve user data from local storage
         let userData = JSON.parse(localStorage.getItem('user'));
-
-// access user id
+        // access user id
         let userId = userData._id;
           axios.post('http://localhost:9090/livraison/addLivraison/'+commandeid+"/"+userId)
-  .then(response => {
-
-     console.log(response);
-     this.refresh = !this.refresh;
-  })
-  .catch(error => {
-    console.log(error);
-  });
+          .then((response) => {
+      console.log(response)
+      Toast.fire ('Livraison Accepter avec succee') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
+    })
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
+    });
 
       },
 

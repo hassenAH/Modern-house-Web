@@ -118,17 +118,17 @@
               >
                 0
               </td>
-              <td
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-              >
-              <select @change="ChangeEtat(commande.id,commande.Etat)" v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                <option value="Packing">Packing</option>
+              <div>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      <select @change="ChangeEtat(commande.id,commande.Etat)" v-model="commande.Etat" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+        <option value="Packing">Packing</option>
                 <option value="Shipping">Shipping</option>
         <option value="Shipped">Shipped</option>
         <option value="Returned">Returned</option>
-        
       </select>
-              </td>
+    </td>
+  </div>
+              
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
@@ -166,6 +166,18 @@
   <script>
   import TableDropdown from "@/components/Dropdowns/DelevaryDropDown.vue";
   import axios from 'axios';
+  import Swall from 'sweetalert2'
+const Toast = Swall.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swall.stopTimer)
+    toast.addEventListener('mouseleave', Swall.resumeTimer)
+  }
+})
 
   export default {
     data() {
@@ -174,6 +186,8 @@
         etat1:"",
         search: '',
         refresh: false,
+        showSuccessModal: false,
+        showErrorModal: false,
       };
     },
     methods: {
@@ -196,13 +210,14 @@
   ChangeEtat(commandeid,etat2)
         {
             axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/"+etat2)
-    .then(response => {
-
-       console.log(response);
-       this.refresh = !this.refresh;
+            .then((response) => {
+      console.log(response)
+      Toast.fire ('Etat changer avec succee') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
     });
 
         },

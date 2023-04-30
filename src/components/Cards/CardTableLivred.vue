@@ -108,13 +108,16 @@
               
         
             </td>
-        <button
+            <div>
+              <button
           class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
           v-on:click="ChangeEtatShipping(commande.id)"
         >
           Annuler
         </button>
+            </div>
+        
         <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
             >
@@ -129,6 +132,18 @@
   <script>
  import TableDropdown from "@/components/Dropdowns/LivreurDropDown.vue";
   import axios from 'axios';
+  import Swall from 'sweetalert2'
+  const Toast = Swall.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swall.stopTimer)
+    toast.addEventListener('mouseleave', Swall.resumeTimer)
+  }
+})
 
   export default {
     data() {
@@ -138,6 +153,8 @@
         search: '',
         etat2:"Shipping",
         refresh: false,
+        showSuccessModal: false,
+        showErrorModal: false,
       };
     },
     methods: {
@@ -165,13 +182,14 @@
 ChangeEtatShipping(commandeid)
         {
             axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Shipping")
-    .then(response => {
-
-       console.log(response);
-       this.refresh = !this.refresh; 
+            .then((response) => {
+      console.log(response)
+      Toast.fire ('La livraison a ete deplacer vers vos en-cours') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
     });
 
         },

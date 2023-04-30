@@ -110,7 +110,8 @@
               
         
             </td>
-            <button
+            <div>
+              <button
           class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
           v-on:click="ChangeEtatShipped(commande.id)"
@@ -124,6 +125,8 @@
         >
           Return
         </button>
+            </div>
+            
         <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
             >
@@ -139,6 +142,19 @@
  
   import axios from 'axios';
   import TableDropdown from "@/components/Dropdowns/LivreurDropDown.vue";
+  import Swall from 'sweetalert2'
+const Toast = Swall.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swall.stopTimer)
+    toast.addEventListener('mouseleave', Swall.resumeTimer)
+  }
+})
+
   export default {
     data() {
       return {
@@ -147,6 +163,8 @@
         search: '',
         etat2:"Shipping",
         refresh: false,
+        showSuccessModal: false,
+        showErrorModal: false,
       };
     },
     methods: {
@@ -174,26 +192,28 @@
 ChangeEtatShipped(commandeid)
         {
             axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Shipped")
-    .then(response => {
-
-       console.log(response);
-       this.refresh = !this.refresh;
+            .then((response) => {
+      console.log(response)
+      Toast.fire ('Livrer avec succeee') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
     });
 
         },
         ChangeEtatReturned(commandeid)
         {
             axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Returned")
-    .then(response => {
-
-       console.log(response);
-       this.refresh = !this.refresh;
+            .then((response) => {
+      console.log(response)
+      Toast.fire ('Livraison retournee') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
     });
 
         },

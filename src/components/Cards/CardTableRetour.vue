@@ -129,6 +129,18 @@
   <script>
  import TableDropdown from "@/components/Dropdowns/LivreurDropDown.vue";
   import axios from 'axios';
+  import Swall from 'sweetalert2'
+  const Toast = Swall.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swall.stopTimer)
+    toast.addEventListener('mouseleave', Swall.resumeTimer)
+  }
+})
 
   export default {
     data() {
@@ -165,13 +177,14 @@
 ChangeEtatShipping(commandeid)
         {
             axios.post('http://localhost:9090/commande/changeetat/'+commandeid+"/Shipping")
-    .then(response => {
-
-       console.log(response);
-       this.refresh = !this.refresh;
+            .then((response) => {
+      console.log(response)
+      Toast.fire ('La livraison a ete deplacer vers vos en-cours') 
+      setTimeout(() => {  this.refresh = !this.refresh; }, 1000)
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
+      console.log(error)
+      Toast.fire ('Opps !! Try Again') 
     });
 
         },
