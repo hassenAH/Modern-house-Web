@@ -37,6 +37,11 @@
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   v-model="code" 
                 />
+                <div style="padding-top: 0px;
+  margin-top: 0px;
+  font-size: 12px; color:red;">
+                  <span v-if="msg.code">{{msg.code}}</span>
+                </div>
               </div>
             </div>
             <div class="w-full lg:w-4/12 px-4">
@@ -128,9 +133,9 @@
       this.expirationDate = value;
       this.validateExpirationDate(value);
     } 
-    , password(value){
-      this.password = value;
-      this.validatePassword(value);
+    , code(value){
+      this.code = value;
+      this.validatecode(value);
     }
   },
   created() {
@@ -142,6 +147,25 @@
   },
     
     methods: {
+      varif()
+      {
+        this.msg.forEach(element => {
+          if(element!="")
+          {
+            return true;
+          }
+          return false;
+        })
+      },
+      validatecode(value)
+      {
+        let difference = 8 - value.length;
+      if (value.length<8) {
+        this.msg['code'] = 'Must be 8 characters! '+ difference + ' characters left' ;
+      } else {
+         this.msg['code'] = '';
+      }
+      },
         validateExpirationDate(value){
             var date1 = moment(value).format("dd-mm-yyyy")
 var date2 = moment(new Date()).format("dd-mm-yyyy")
@@ -155,7 +179,7 @@ if(date1 <  date2){
      },
      async handleSubmit() {
         this.submitting = true;
-        if(this.msg.length>0 )
+        if(this.varif())
         {
             this.msg['Alert'] = 'You need to complete the Form';   
         }
@@ -172,6 +196,13 @@ if(date1 <  date2){
             
   
           })
+          if(result.response
+.status != 200)
+          {
+            this.msg['Alert'] = 'You need to complete the Form';   
+          }else {
+         this.msg['Alert'] = '';
+      }
           console.warn(result);
         }
         
