@@ -17,6 +17,8 @@ import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 import Supplier from "@/layouts/Supplier.vue";
 import Livreur from "@/layouts/Livreur.vue";
+import SupplierMap from "@/layouts/SupplierMap.vue"
+
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
@@ -32,11 +34,12 @@ import SupplierDashboard from "@/views/Supplier/Dashboard.vue";
 import SupplierSettings from "@/views/Supplier/Settings.vue";
 import SupplierTables from "@/views/Supplier/Tables.vue";
 import SuplierCodePromo from "@/views/Supplier/SuplierCodePromoTables.vue";
-import SupplierMaps from "@/views/Supplier/Maps.vue";
+import SupplierMaps from "@/views/SupplierMap/Maps.vue";
 import DetailCommande from "@/views/Supplier/DetailCommande.vue";
 import shipping from "@/views/Supplier/Shipping.vue";
 import archive from "@/views/Supplier/Archive.vue";
-
+import Position from "@/views/SupplierMap/Position.vue"
+import MapView from "@/views/SupplierMap/MapView.vue"
 // views for Livreur layout
 
 
@@ -52,6 +55,7 @@ import Register from "@/views/auth/Register.vue";
 import ResetPassword from "@/views/auth/ResetPassword.vue";
 import ForgetPassword from "@/views/auth/ForgetPassword.vue";
 import OTP from "@/views/auth/OTP.vue"
+
 // views without layouts
 
 import Landing from "@/views/Landing.vue";
@@ -119,10 +123,6 @@ const routes = [
         component: product,
       },
       {
-        path: "/Supplier/maps",
-        component: SupplierMaps,
-      },
-      {
         path: "/Supplier/detailcommande/:id",
         name: "detailcommande",
         component: DetailCommande,
@@ -134,6 +134,26 @@ const routes = [
       {
         path: "/Supplier/archive",
         component: archive,
+      },
+      
+    ],
+  },
+  {
+    path: "/SupplierMap",
+    redirect: "/SupplierMap/position",
+    component: SupplierMap,
+    children: [
+      {
+        path: "/SupplierMap/maps",
+        component: SupplierMaps,
+      },
+      {
+        path: "/SupplierMap/position",
+        component: Position,
+      },
+      {
+        path: "/SupplierMap/mapview",
+        component: MapView,
       },
     ],
   },
@@ -162,6 +182,7 @@ const routes = [
         path: "/Livreur/retour",
         component: Retour,
       },
+      
     ],
   },
   {
