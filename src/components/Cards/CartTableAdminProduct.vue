@@ -78,7 +78,7 @@
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
               >
                 <img
-                :src="`http://localhost:9090/img/${p.image}` "
+                :src="`http://localhost:9090/image/${p.image}` "
                   class="h-12 w-12 bg-white rounded-full border"
                   alt="..."
                 />
